@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: #0f172a;
+  --background: #fafaf9;
+  --muted: #64748b;
+  --accent: #059669;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground: #fafaf9;
+    --background: #0c0a09;
+    --muted: #a8a29e;
+    --accent: #34d399;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+/* Subtle gradient background (warm neutral + hint of accent) */
+body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(5, 150, 105, 0.06), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 80%, rgba(120, 53, 246, 0.04), transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(52, 211, 153, 0.05), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 80%, rgba(167, 139, 250, 0.03), transparent);
+  }
+}
+
+/* Link hover: animated underline */
+@layer components {
+  .link-accent {
+    @apply text-emerald-600 dark:text-emerald-400 transition-colors duration-200;
+    @apply hover:text-emerald-700 dark:hover:text-emerald-300;
+  }
+  .link-underline {
+    @apply relative;
+  }
+  .link-underline::after {
+    content: "";
+    @apply absolute left-0 bottom-[-2px] block h-px w-0 bg-current transition-all duration-300;
+  }
+  .link-underline:hover::after {
+    @apply w-full;
+  }
+}
+
+/* Selection */
+::selection {
+  @apply bg-emerald-200/60 dark:bg-emerald-800/50 text-slate-900 dark:text-slate-100;
+}
