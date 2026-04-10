@@ -79,5 +79,18 @@ export function UxBlock({ children }: { children: React.ReactNode }) {
   );
 }
 
+export function ProductDesignBlock({ children }: { children: React.ReactNode }) {
+  return (
+    <Block
+      label="Product design"
+      borderClass="border-sky-400/70 dark:border-sky-500/60"
+      bgClass="bg-sky-50/50 dark:bg-sky-950/25"
+      pillClass="bg-sky-200/80 dark:bg-sky-900/50 text-sky-900 dark:text-sky-200"
+    >
+      {children}
+    </Block>
+  );
+}
+
 export const sectionCardClass =
   "rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white/70 dark:bg-slate-800/50 backdrop-blur-sm overflow-hidden";

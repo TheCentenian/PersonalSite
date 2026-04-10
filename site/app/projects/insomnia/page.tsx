@@ -3,6 +3,7 @@ import { ProjectPageHeader } from "@/components/ProjectPageHeader";
 import {
   DesignBlock,
   FlowBlock,
+  ProductDesignBlock,
   UiBlock,
   UxBlock,
   listClass,
@@ -68,7 +69,46 @@ export default function InsomniaPage() {
 
         <section
           className={`opacity-0 animate-fade-in-up ${sectionCardClass}`}
-          style={{ animationDelay: "260ms" }}
+          style={{ animationDelay: "240ms" }}
+        >
+          <div className="p-6">
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
+              Product design
+            </h2>
+            <div className="mt-5">
+              <ProductDesignBlock>
+                <ul className={listClass}>
+                  <li>
+                    <strong className="text-slate-900 dark:text-slate-100">Problem:</strong> A fair reflex challenge you can try without crypto setup,
+                    with an optional path to compete and persist—without wallet friction before the loop feels good.
+                  </li>
+                  <li>
+                    <strong className="text-slate-900 dark:text-slate-100">Navigation:</strong> Home positions demo vs premium; full play on the game
+                    screen; Profile, Statistics, Leaderboard, and
+                    Settings stay in modals so the grid stays the anchor.
+                  </li>
+                  <li>
+                    <strong className="text-slate-900 dark:text-slate-100">Decisions:</strong> First target is forgiving and commits rules on first hit;
+                    no document scroll during play; neon theme tokens and large touch targets; complexity staged from orientation → strict timed rounds →
+                    optional social surfaces.
+                  </li>
+                </ul>
+                <p className="mt-4 text-sm">
+                  <Link
+                    href="/product-design/insomnia"
+                    className="font-medium text-sky-800 dark:text-sky-300 link-underline hover:text-sky-900 dark:hover:text-sky-200"
+                  >
+                    Full product design case →
+                  </Link>
+                </p>
+              </ProductDesignBlock>
+            </div>
+          </div>
+        </section>
+
+        <section
+          className={`opacity-0 animate-fade-in-up ${sectionCardClass}`}
+          style={{ animationDelay: "300ms" }}
         >
           <div className="p-6">
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
@@ -93,7 +133,7 @@ export default function InsomniaPage() {
         </section>
       </div>
 
-      <div className="mt-12 opacity-0 animate-fade-in-up" style={{ animationDelay: "340ms" }}>
+      <div className="mt-12 opacity-0 animate-fade-in-up" style={{ animationDelay: "380ms" }}>
         <Link href="/projects" className="link-accent link-underline inline-flex items-center text-sm font-medium gap-1 group">
           <span className="inline-block transition-transform duration-200 group-hover:-translate-x-0.5">←</span> View all projects
         </Link>

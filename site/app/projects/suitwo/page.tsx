@@ -3,6 +3,7 @@ import { ProjectPageHeader } from "@/components/ProjectPageHeader";
 import {
   DesignBlock,
   FlowBlock,
+  ProductDesignBlock,
   UiBlock,
   UxBlock,
   listClass,
@@ -67,7 +68,46 @@ export default function SuiTwoShooterPage() {
 
         <section
           className={`opacity-0 animate-fade-in-up ${sectionCardClass}`}
-          style={{ animationDelay: "260ms" }}
+          style={{ animationDelay: "240ms" }}
+        >
+          <div className="p-6">
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
+              Product design
+            </h2>
+            <div className="mt-5">
+              <ProductDesignBlock>
+                <ul className={listClass}>
+                  <li>
+                    <strong className="text-slate-900 dark:text-slate-100">Problem:</strong> Get from “open tab” to playing fast, with optional wallet,
+                    store, and tournaments that never feel like a checkout on every run.
+                  </li>
+                  <li>
+                    <strong className="text-slate-900 dark:text-slate-100">Navigation:</strong> Front screen → hub menu;{" "}
+                    <strong className="text-slate-900 dark:text-slate-100">Start Game</strong> as the primary CTA; tabbed Store &amp; Inventory; Leaderboard
+                    and Tournaments from the same hub; How to Play holds depth without blocking the first session.
+                  </li>
+                  <li>
+                    <strong className="text-slate-900 dark:text-slate-100">Decisions:</strong> Credits and tickets prepaid and consumed on Play; panels
+                    and modals instead of page sprawl; store opens on the right tab when context demands it; gold framing makes tournament runs mentally
+                    distinct from casual play.
+                  </li>
+                </ul>
+                <p className="mt-4 text-sm">
+                  <Link
+                    href="/product-design/sui-two-shooter"
+                    className="font-medium text-sky-800 dark:text-sky-300 link-underline hover:text-sky-900 dark:hover:text-sky-200"
+                  >
+                    Full product design case →
+                  </Link>
+                </p>
+              </ProductDesignBlock>
+            </div>
+          </div>
+        </section>
+
+        <section
+          className={`opacity-0 animate-fade-in-up ${sectionCardClass}`}
+          style={{ animationDelay: "300ms" }}
         >
           <div className="p-6">
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
@@ -93,7 +133,7 @@ export default function SuiTwoShooterPage() {
 
         <section
           className={`opacity-0 animate-fade-in-up ${sectionCardClass}`}
-          style={{ animationDelay: "340ms" }}
+          style={{ animationDelay: "380ms" }}
         >
           <div className="p-6">
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
@@ -106,7 +146,7 @@ export default function SuiTwoShooterPage() {
         </section>
       </div>
 
-      <div className="mt-12 opacity-0 animate-fade-in-up" style={{ animationDelay: "420ms" }}>
+      <div className="mt-12 opacity-0 animate-fade-in-up" style={{ animationDelay: "460ms" }}>
         <Link href="/projects" className="link-accent link-underline inline-flex items-center text-sm font-medium gap-1 group">
           <span className="inline-block transition-transform duration-200 group-hover:-translate-x-0.5">←</span> View all projects
         </Link>

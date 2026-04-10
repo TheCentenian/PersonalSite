@@ -3,6 +3,7 @@ import { ProjectPageHeader } from "@/components/ProjectPageHeader";
 import {
   DesignBlock,
   FlowBlock,
+  ProductDesignBlock,
   UiBlock,
   UxBlock,
   listClass,
@@ -61,7 +62,45 @@ export default function EvarraTrackerPage() {
 
         <section
           className={`opacity-0 animate-fade-in-up ${sectionCardClass}`}
-          style={{ animationDelay: "260ms" }}
+          style={{ animationDelay: "240ms" }}
+        >
+          <div className="p-6">
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
+              Product design
+            </h2>
+            <div className="mt-5">
+              <ProductDesignBlock>
+                <ul className={listClass}>
+                  <li>
+                    <strong className="text-slate-900 dark:text-slate-100">Problem:</strong> Give people one place to track goals, review wallet
+                    context (Sui-forward), and compose what goes into analysis—without overwhelm on day one or mistrust when loads or sync are slow.
+                  </li>
+                  <li>
+                    <strong className="text-slate-900 dark:text-slate-100">Navigation:</strong> Tracker as the home loop; top nav to Wallets, Goals,
+                    Insights, Settings; repeated list header pattern (search, filters, primary action); wallet list + side panel for holdings and txs;
+                    Insights as drag-into-pool → analyze, with tokens only after wallets are in the pool.
+                  </li>
+                  <li>
+                    <strong className="text-slate-900 dark:text-slate-100">Decisions:</strong> Drill-down in panels instead of constant route changes;
+                    explicit sync progress and cold-start messaging; advanced layouts gated behind Settings so beginners stay on simpler surfaces.
+                  </li>
+                </ul>
+                <p className="mt-4 text-sm">
+                  <Link
+                    href="/product-design/evarra-tracker"
+                    className="font-medium text-sky-800 dark:text-sky-300 link-underline hover:text-sky-900 dark:hover:text-sky-200"
+                  >
+                    Full product design case →
+                  </Link>
+                </p>
+              </ProductDesignBlock>
+            </div>
+          </div>
+        </section>
+
+        <section
+          className={`opacity-0 animate-fade-in-up ${sectionCardClass}`}
+          style={{ animationDelay: "300ms" }}
         >
           <div className="p-6">
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
@@ -87,7 +126,7 @@ export default function EvarraTrackerPage() {
 
         <section
           className={`opacity-0 animate-fade-in-up ${sectionCardClass}`}
-          style={{ animationDelay: "340ms" }}
+          style={{ animationDelay: "380ms" }}
         >
           <div className="p-6">
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
@@ -100,7 +139,7 @@ export default function EvarraTrackerPage() {
         </section>
       </div>
 
-      <div className="mt-12 opacity-0 animate-fade-in-up" style={{ animationDelay: "420ms" }}>
+      <div className="mt-12 opacity-0 animate-fade-in-up" style={{ animationDelay: "460ms" }}>
         <Link href="/projects" className="link-accent link-underline inline-flex items-center text-sm font-medium gap-1 group">
           <span className="inline-block transition-transform duration-200 group-hover:-translate-x-0.5">←</span> View all projects
         </Link>
