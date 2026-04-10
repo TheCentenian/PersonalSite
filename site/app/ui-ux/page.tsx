@@ -91,7 +91,12 @@ export default function UiUxPage() {
         </p>
         <p className="mt-2 text-sm text-slate-500 dark:text-slate-400 max-w-xl">
           <strong className="text-slate-700 dark:text-slate-300">UI</strong> is what we built—structure, components, and visual design.{" "}
-          <strong className="text-slate-700 dark:text-slate-300">UX</strong> is why and how it serves users—goals, flows, and outcomes.
+          <strong className="text-slate-700 dark:text-slate-300">UX</strong> is why and how it serves users—goals, flows, and outcomes. For
+          product-level problems, flows, and design tradeoffs in narrative form, see{" "}
+          <Link href="/product-design" className="text-emerald-700 dark:text-emerald-300 font-medium link-underline">
+            Product design
+          </Link>
+          .
         </p>
       </div>
 

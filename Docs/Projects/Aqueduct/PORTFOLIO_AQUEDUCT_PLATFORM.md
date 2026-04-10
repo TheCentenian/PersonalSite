@@ -4,7 +4,7 @@ This document describes, in explicit and expanded form, what has been built in t
 
 **How to use this document:** The content is intentionally **exhaustively documented** (detailed sections, concrete file paths, API routes, service and function names, env vars, data flows) so you can trim later. You can **condense and rewrite** for a one-page summary, resume bullets, or keep the long form as a master reference. The **Codebase and File Reference** section gives a single place to find paths and names when you need to keep or drop specifics. Sections **7** and **8** are tuned for applications and interviews; the rest is the full technical and narrative backing.
 
-**Relationship to apps:** The platform is a **separate entity** from any single app (e.g. SuiTwo Market Shooter). **Apps define** (what items, events, milestones, rewards); the **platform executes** (purchases, consume, enter, submit, distribute). The platform never holds app/game private keys; it **builds** transactions and apps/games **sign and submit**. See [PORTFOLIO_SUITWO_SHOOTER.md](../SuiTwo/PORTFOLIO_SUITWO_SHOOTER.md) for the shooter app.
+**Relationship to apps:** The platform is a **separate entity** from any single app (e.g. SuiTwo Market Shooter). **Apps define** (what items, events, milestones, rewards); the **platform executes** (purchases, consume, enter, submit, distribute). The platform never holds app/game private keys; it **builds** transactions and apps/games **sign and submit**. See [PORTFOLIO_SUITWO_SHOOTER.md](../SuiTwo Shooter/PORTFOLIO_SUITWO_SHOOTER.md) for the shooter app.
 
 ---
 

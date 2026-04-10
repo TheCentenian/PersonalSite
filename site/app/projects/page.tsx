@@ -17,7 +17,7 @@ const projects = [
     summary:
       "Accelerates your development. Shared infrastructure on Sui lets you focus on your app and your users. Events, commerce, distribution, and identity are built in so you can ship faster and lean on proven building blocks instead of reinventing them.",
     status: "In use",
-    update: "Platform in use; SuiTwo is being wired to it for testing and integration.",
+    update: "Platform in use; SuiTwo Market Shooter is being wired to it for testing and integration.",
     href: "/projects/aqueduct",
   },
   {

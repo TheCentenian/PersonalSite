@@ -16,7 +16,10 @@ export default function InsomniaPage() {
         title="Insomnia Game"
         subtitle="Fast-paced 5×5 clicker/reflex endurance game on Sui"
         status="Built, unreleased"
-        links={[{ href: "/ui-ux", label: "UI and UX Design" }]}
+        links={[
+          { href: "/ui-ux", label: "UI and UX Design" },
+          { href: "/product-design/insomnia", label: "Product design" },
+        ]}
         liveUrl="https://insomnia-blue.vercel.app/"
         liveLabel="Play game"
         liveAsButton

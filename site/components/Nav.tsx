@@ -5,6 +5,7 @@ const links = [
   { href: "/projects", label: "Projects" },
   { href: "/architecture", label: "Architecture" },
   { href: "/ui-ux", label: "UI and UX" },
+  { href: "/product-design", label: "Product design" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];

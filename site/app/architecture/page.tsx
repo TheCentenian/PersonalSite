@@ -108,7 +108,7 @@ export default function ArchitecturePage() {
           </div>
         </section>
 
-        {/* SuiTwo */}
+        {/* SuiTwo Market Shooter (SuiTwo Shooter docs folder) */}
         <section
           className="opacity-0 animate-fade-in-up rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white/70 dark:bg-slate-800/50 backdrop-blur-sm overflow-hidden"
           style={{ animationDelay: "240ms" }}

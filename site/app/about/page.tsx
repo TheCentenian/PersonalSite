@@ -18,8 +18,7 @@ export default function AboutPage() {
           Over the past year and a half, the focus has been learning and building
           within the Sui ecosystem. Many ideas became prototypes and MVPs:
           modular platform infrastructure (Aqueduct), goal and transaction-analytics
-          tools (Evarra Tracker: translating complex blockchain data into human-readable form), and a blockchain-integrated game (SuiTwo Market
-          Shooter). This site highlights some of the more complete systems built
+          tools (Evarra Tracker: translating complex blockchain data into human-readable form), and a blockchain-integrated game (SuiTwo Market Shooter). This site highlights some of the more complete systems built
           in that time.
         </p>
         <p className="opacity-0 animate-fade-in-up" style={{ animationDelay: "180ms" }}>

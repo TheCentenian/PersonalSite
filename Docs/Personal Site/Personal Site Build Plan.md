@@ -83,8 +83,8 @@ Use the **PORTFOLIO_*** docs as the single source of truth; condense for the web
   - Optional: screenshot of UI; link to GitHub if public.
 
 - [ ] **SuiTwo Market Shooter**
-  - Source: `Projects/SuiTwo/PORTFOLIO_SUITWO_SHOOTER.md` — Key Points, Sections 7 & 8.
-  - Additional sources (for UI/UX or narrative angle): `Projects/SuiTwo/PORTFOLIO_UI_UX_SUITWO_SHOOTER.md` (talking points, design system, responsive highlight); `Projects/SuiTwo/SuiTwo Market Shooter Revised.md` (design goals, interface architecture, responsive narrative). Full UI/UX detail in `Projects/SuiTwo/UI_SUITWO_SHOOTER.md` and `Projects/SuiTwo/UX_SUITWO_SHOOTER.md` if needed.
+  - Source: `Projects/SuiTwo Shooter/PORTFOLIO_SUITWO_SHOOTER.md` — Key Points, Sections 7 & 8.
+  - Additional sources (for UI/UX or narrative angle): `Projects/SuiTwo Shooter/PORTFOLIO_UI_UX_SUITWO_SHOOTER.md` (talking points, design system, responsive highlight); `Projects/SuiTwo Shooter/SuiTwo Market Shooter Revised.md` (design goals, interface architecture, responsive narrative). Full UI/UX detail in `Projects/SuiTwo Shooter/UI_SUITWO_SHOOTER.md` and `Projects/SuiTwo Shooter/UX_SUITWO_SHOOTER.md` if needed.
   - Content: Market-themed shooter on Sui; verified scores, leaderboard, store, soulbound badge, tournaments, game pass; backend builds / player signs.
   - Optional: screenshot or short video; link to playable build and GitHub if public.
 
@@ -151,10 +151,10 @@ For each project page: title, 1–2 short paragraphs, 3–5 bullet highlights, o
 | Aqueduct scope and wording | Projects/Aqueduct/PORTFOLIO_AQUEDUCT_PLATFORM.md (Key Points, §7, §8) |
 | Evarra Tracker scope and wording | Projects/Evarra Tracker/PORTFOLIO_AND_ACCOMPLISHMENTS.md (Key Points) |
 | Evarra Tracker UI/UX full detail | Projects/Evarra Tracker/UI_EVARRA_TRACKER.md, UX_EVARRA_TRACKER.md |
-| SuiTwo scope and wording | Projects/SuiTwo/PORTFOLIO_SUITWO_SHOOTER.md (Key Points, §7, §8) |
-| SuiTwo UI/UX overview and talking points | Projects/SuiTwo/PORTFOLIO_UI_UX_SUITWO_SHOOTER.md |
-| SuiTwo UI/UX full detail | Projects/SuiTwo/UI_SUITWO_SHOOTER.md, Projects/SuiTwo/UX_SUITWO_SHOOTER.md |
-| SuiTwo narrative / design overview | Projects/SuiTwo/SuiTwo Market Shooter Revised.md |
+| SuiTwo scope and wording | Projects/SuiTwo Shooter/PORTFOLIO_SUITWO_SHOOTER.md (Key Points, §7, §8) |
+| SuiTwo UI/UX overview and talking points | Projects/SuiTwo Shooter/PORTFOLIO_UI_UX_SUITWO_SHOOTER.md |
+| SuiTwo UI/UX full detail | Projects/SuiTwo Shooter/UI_SUITWO_SHOOTER.md, Projects/SuiTwo Shooter/UX_SUITWO_SHOOTER.md |
+| SuiTwo narrative / design overview | Projects/SuiTwo Shooter/SuiTwo Market Shooter Revised.md |
 | Architecture narrative | Personal Site/Website.md + “Key Points” and architecture sections in each PORTFOLIO_* |
 | Contact / privacy | Personal Site/Website.md (Contact, Privacy) |
 | Additional projects (docs ready) | Projects/Military card-board game/, Paradigm Wallet/, Insomnia/ (each: PORTFOLIO_* + UI_* + UX_*); see Docs/README.md |

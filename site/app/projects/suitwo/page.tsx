@@ -9,7 +9,7 @@ import {
   sectionCardClass,
 } from "@/components/ContentBlocks";
 
-export default function SuiTwoPage() {
+export default function SuiTwoShooterPage() {
   return (
     <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24 bg-sky-50 dark:bg-teal-950/90 h-full min-h-0 overflow-y-auto">
       <ProjectPageHeader
@@ -19,6 +19,7 @@ export default function SuiTwoPage() {
         links={[
           { href: "/architecture", label: "Architecture Design" },
           { href: "/ui-ux", label: "UI and UX Design" },
+          { href: "/product-design/sui-two-shooter", label: "Product design" },
         ]}
         liveUrl="https://sui-two-shooter.vercel.app/"
         liveLabel="Play game"

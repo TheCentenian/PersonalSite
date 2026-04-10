@@ -19,6 +19,7 @@ export default function EvarraTrackerPage() {
         links={[
           { href: "/architecture", label: "Architecture Design" },
           { href: "/ui-ux", label: "UI and UX Design" },
+          { href: "/product-design/evarra-tracker", label: "Product design" },
         ]}
         liveUrl="https://evarra-tracker.vercel.app/"
         liveLabel="Try the app"
