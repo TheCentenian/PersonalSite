@@ -109,11 +109,11 @@ export default function AqueductPage() {
                 Open full page
               </a>
             </p>
-            <div className="mt-4 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 shadow-sm">
+            <div className="mt-4 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700 bg-white shadow-sm">
               <iframe
                 title="Aqueduct platform architecture diagram"
                 src="/aqueduct-architecture-diagram.html"
-                className="w-full h-[min(85vh,920px)] border-0 bg-slate-50 dark:bg-slate-900"
+                className="w-full h-[min(85vh,920px)] border-0 bg-white [color-scheme:light]"
                 loading="lazy"
               />
             </div>
