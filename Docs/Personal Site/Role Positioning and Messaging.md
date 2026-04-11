@@ -12,7 +12,7 @@ These are the role types that match your current stack and what you’ve built. 
 |-----------|-------------|
 | **Web3 Product Manager / Product Architect** | You design systems, not just code. Product roadmaps, architecture, tokenomics, UX. |
 | **Protocol-adjacent / Ecosystem Strategy** | You build apps and platforms that sit alongside protocols (Aqueduct, games, tooling). |
-| **Game Economy Designer / Web3 Game Infrastructure** | SuiTwo, Aqueduct game pass, tournaments, rewards, NFT progression — you’ve designed economies and on-chain game systems. |
+| **Game Economy Designer / Web3 Game Infrastructure** | SuiTwo, Aqueduct game pass, tournaments, rewards, Insignia (per-wallet progression), NFT progression — you’ve designed economies and on-chain game systems. |
 | **Senior Frontend / Wallet Product Engineer** | React, Next.js, TypeScript, wallet integration, transaction signing, “blockchain usability and transaction clarity.” Evarra Tracker and shooter UI map well. |
 | **Web3 Product Engineering (full-stack)** | Frontend + backend + Move modules + product thinking. You span four domains: full-stack app, blockchain integration, smart-contract-level systems, product/systems design. |
 

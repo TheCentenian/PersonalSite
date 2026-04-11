@@ -4,7 +4,7 @@ This document describes, in explicit and expanded form, what has been built in t
 
 **How to use this document:** The content is intentionally **exhaustively documented** (detailed sections, concrete file paths, API routes, service and module names, env vars, data flows) so you can trim later. You can **condense and rewrite** for a one-page summary, resume bullets, or keep the long form as a master reference. The **Codebase and File Reference** section gives a single place to find paths and names when you need to keep or drop specifics. Sections **7** and **8** are tuned for applications and interviews; the rest is the full technical and narrative backing.
 
-**Relationship to platform:** SuiTwo Market Shooter is **one app**. The **Aqueduct Platform** (shared infrastructure—wallet, events, game pass, tournaments, provisions) is a **separate entity** documented in its own portfolio file. This document covers only the shooter game product.
+**Relationship to platform:** SuiTwo Market Shooter is **one app**. The **Aqueduct Platform** (shared infrastructure—wallet, events, game pass, tournaments, provisions, Insignia per-player progression) is a **separate entity** documented in its own portfolio file. This document covers only the shooter game product.
 
 ---
 
@@ -12,7 +12,7 @@ This document describes, in explicit and expanded form, what has been built in t
 
 - **Product:** **SuiTwo Market Shooter** — market-themed auto-fire shooter on **Sui**. Player controls SuiTwo, fighting bearish forces (enemies and bosses) on a scrolling market chart. Four difficulty tiers, 10-level orb progression, desktop and mobile. Scores and progression are **verified on-chain**.
 
-- **Stack:** **Frontend:** vanilla JavaScript game (canvas/rendering, systems, UI), served via custom dev server or Vercel; **Backend:** Next.js API (TypeScript); **Contracts:** Sui Move (suitwo_game package; platform contracts used for game_pass, events, tournaments, provisions). Wallet integration via shared wallet module.
+- **Stack:** **Frontend:** vanilla JavaScript game (canvas/rendering, systems, UI), served via custom dev server or Vercel; **Backend:** Next.js API (TypeScript); **Contracts:** Sui Move (suitwo_game package; platform contracts used for game_pass, events, tournaments, provisions, Insignia). Wallet integration via shared wallet module.
 
 - **Wallet & identity:** Players **connect a Sui wallet** for identity; used for leaderboard, store, achievements, tournaments, game pass, and badge. Demo mode available without wallet. Optional token gatekeeping (e.g. minimum $MEWS balance) for full access.
 
@@ -30,7 +30,7 @@ This document describes, in explicit and expanded form, what has been built in t
 
 - **Game pass:** Credits and tickets held on game pass; consume-credit and start-game flows; admin tools for credits/tickets; integration with platform game_pass module.
 
-- **Architecture:** **Frontend** (game loop, systems, rendering, UI, wallet/store/tournament/achievement panels) in `apps/shooter-game/frontend/`. **Backend** (Next.js API: scores, leaderboard, store, inventory, achievements, tournaments, game-pass, badges, config, admin, platform proxy) in `apps/shooter-game/backend/`. **Contracts** (suitwo_game Move: score_submission, achievement_system, badge_system, game_config, mews, tournaments; platform supplies provisions, events, game_pass). **Platform** is separate (see Aqueduct Platform portfolio).
+- **Architecture:** **Frontend** (game loop, systems, rendering, UI, wallet/store/tournament/achievement panels) in `apps/shooter-game/frontend/`. **Backend** (Next.js API: scores, leaderboard, store, inventory, achievements, tournaments, game-pass, badges, config, admin, platform proxy) in `apps/shooter-game/backend/`. **Contracts** (suitwo_game Move: score_submission, achievement_system, badge_system, game_config, mews, tournaments; platform supplies provisions, events, game_pass, Insignia). **Platform** is separate (see Aqueduct Platform portfolio).
 
 - **Security:** Anti-cheat (min distance/score on-chain, digest verification, backend validation); wallet-signed actions for score submit, store purchase, achievement claim, tournament entry; admin and config behind appropriate checks.
 
@@ -125,10 +125,10 @@ Paths are relative to the project root unless noted.
 
 **Contracts (apps/shooter-game/contracts/suitwo_game/):**
 
-- **Package:** suitwo_game (Sui Move). Game-specific modules; platform (aqueduct_platform) supplies shared modules (provisions, events, game_pass, tournaments).
+- **Package:** suitwo_game (Sui Move). Game-specific modules; platform (aqueduct_platform) supplies shared modules (provisions, events, game_pass, tournaments, insignia / insignia_registry).
 - **Game modules (suitwo_game):** score_submission (score verification, PlayerStats, session registry), achievement_system (milestone definitions, claim tracking), badge_system (badge mint/update, tier progression), game_config (config and thresholds), mews (token type / economy), tournaments (creation, entry, leaderboards, rewards). **Note:** Per workspace rules, game contract is bypassed for deployment (platform deployment only); module list reflects design.
 - **Source paths:** `sources/mews.move` (in-repo game source); other modules may be in same package or platform — see platform docs and build output. Build: `build/suitwo_game/sources/`.
-- **Platform (separate):** provisions (item catalog), events, game_pass, Regatta/Station — see Aqueduct Platform portfolio.
+- **Platform (separate):** provisions (item catalog), events, game_pass, Regatta/Station, Insignia (per-wallet opaque key→value progression) — see Aqueduct Platform portfolio.
 - **Deployment:** `DEPLOYMENT_IDS_NEW.md` for package/object IDs (do not edit .env); `README.md`, `DEPLOYMENT.md` for deploy steps.
 
 **Scripts and config:**
@@ -155,7 +155,7 @@ Paths are relative to the project root unless noted.
 
 ### 1.4 Smart Contracts
 
-**Sui Move.** Game package **suitwo_game** (apps/shooter-game/contracts/suitwo_game/): score_submission, achievement_system, badge_system, game_config, mews, tournaments (module list reflects design; in-repo source: sources/mews.move; others may be in package or platform). **Platform** package (aqueduct_platform): provisions (item catalog), game_pass, events, Regatta/Station. Deploy with `deploy.js` from contracts folder; IDs in `DEPLOYMENT_IDS_NEW.md`. Per workspace rules, game contract is bypassed for deployment (platform deployment only).
+**Sui Move.** Game package **suitwo_game** (apps/shooter-game/contracts/suitwo_game/): score_submission, achievement_system, badge_system, game_config, mews, tournaments (module list reflects design; in-repo source: sources/mews.move; others may be in package or platform). **Platform** package (aqueduct_platform): provisions (item catalog), game_pass, events, Regatta/Station, insignia (`insignia_registry.move`). Deploy with `deploy.js` from contracts folder; IDs in `DEPLOYMENT_IDS_NEW.md`. Per workspace rules, game contract is bypassed for deployment (platform deployment only).
 
 ### 1.5 Deployment and Environment
 
@@ -175,7 +175,7 @@ Paths are relative to the project root unless noted.
 
 ### 1.9 Platform Integration
 
-Game backend calls **platform** for: config (Helm), catalog (Provisions/Terminal), Regatta (tournaments create/enter/submit-score/distribute), Reservoir (game pass, credits, tickets), Sustain (milestones evaluate/claim, distribution), Shipyard (badge has-badge, mint, upgrade), Channel (tx build/execute/estimate/batch), Hydroscope (stats), Glacier (vaults). Platform client and app-config in `lib/services/platform/`. Corridor caps and ecosystem API key required for platform routes; see env-template.
+Game backend calls **platform** for: config (Helm), catalog (Provisions/Terminal), Regatta (tournaments create/enter/submit-score/distribute), Reservoir (game pass, credits, tickets), Sustain (milestones evaluate/claim, distribution), Shipyard (badge has-badge, mint, upgrade), Insignia (per-player progression bytes where used), Channel (tx build/execute/estimate/batch), Hydroscope (stats), Glacier (vaults). Platform client and app-config in `lib/services/platform/`. Corridor caps and ecosystem API key required for platform routes; see env-template.
 
 ### 1.10 Admin UI
 
@@ -189,7 +189,7 @@ Backend includes **admin app** under `app/admin/`: tabs for game config, items, 
 
 - **Frontend:** Self-contained under `apps/shooter-game/frontend/`. Game code in `src/game/` (main, systems, rendering, audio, blockchain); config in `src/config/`. Depends on platform only for wallet module and config (URLs, contracts).
 - **Backend:** Self-contained under `apps/shooter-game/backend/`. API routes by domain (scores, store, achievements, tournaments, etc.); lib/services for Sui and platform integration; admin app under `app/admin/` for game config, items, tournaments, badges, migration, etc.
-- **Contracts:** Game-specific Move in `apps/shooter-game/contracts/suitwo_game/`; platform contracts (provisions, game_pass, events) in Aqueduct Platform repo/folder.
+- **Contracts:** Game-specific Move in `apps/shooter-game/contracts/suitwo_game/`; platform contracts (provisions, game_pass, events, insignia) in Aqueduct Platform repo/folder.
 
 ### 2.2 Game Systems (Frontend)
 
@@ -277,7 +277,7 @@ Frontend has **no global store** (no Zustand/Redux); game state lives in game-st
 
 ### 4.8 Platform and Game Boundary
 
-- Game backend uses platform for catalog, Regatta, Reservoir, Sustain, Shipyard, Channel, Hydroscope, Helm, Glacier; game-specific logic (score submission, achievement definitions, badge tier rules, game config) in game backend and game contracts where deployed. Clear separation: platform = shared infra; game = product and rules.
+- Game backend uses platform for catalog, Regatta, Reservoir, Sustain, Shipyard, Insignia, Channel, Hydroscope, Helm, Glacier; game-specific logic (score submission, achievement definitions, badge tier rules, game config) in game backend and game contracts where deployed. Clear separation: platform = shared infra; game = product and rules.
 
 ---
 

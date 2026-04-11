@@ -128,7 +128,7 @@ Provides a registry for structured definitions used by applications such as mile
 
 **Insignia**
 
-Stores per player state information such as advancement, ranks, or other application specific state data.
+**Insignia** is the `insignia` Move package (`insignia_registry.move`): a per-player progression store that maps opaque keys to value bytes for each `(ecosystem_id, app_id, wallet)`. The platform stores the bytes; apps assign meaning to keys and values (badges, ranks, tiers, and similar progression data).
 
 ---
 

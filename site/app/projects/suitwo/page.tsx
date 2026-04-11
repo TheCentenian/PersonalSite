@@ -140,7 +140,7 @@ export default function SuiTwoShooterPage() {
               Stack
             </h2>
             <ul className={`mt-3 ${listClass}`}>
-              <li>Vanilla JS game frontend, Next.js backend (TypeScript), Sui Move game contracts (score_submission, achievement_system, badge_system, tournaments). Uses Aqueduct Platform for catalogs, events, Regatta, Reservoir, Sustain, Shipyard.</li>
+              <li>Vanilla JS game frontend, Next.js backend (TypeScript), Sui Move game contracts (score_submission, achievement_system, badge_system, tournaments). Uses Aqueduct Platform for catalogs, events, Regatta, Reservoir, Sustain, Shipyard, Insignia.</li>
             </ul>
           </div>
         </section>

@@ -96,6 +96,7 @@ export default function ArchitecturePage() {
                   <li><strong className="text-slate-900 dark:text-slate-100">Balances, distribution, vaults:</strong> Balances and units (merge, consume). Distribution for milestones, payouts; vaults lock assets and release per app-defined rules.</li>
                   <li><strong className="text-slate-900 dark:text-slate-100">NFT operations:</strong> Apps define collections; platform executes mint, upgrade, burn, merge. Transfer policies app-defined.</li>
                   <li><strong className="text-slate-900 dark:text-slate-100">Identity and entitlements:</strong> Wallet connect, identity resolution, entitlements (grant/revoke). App-scoped auth.</li>
+                  <li><strong className="text-slate-900 dark:text-slate-100">Per-player progression (Insignia):</strong> Opaque key→value bytes per ecosystem, app, and wallet (<code className="text-xs text-slate-500 dark:text-slate-400">insignia_registry.move</code>); apps interpret keys and values (badges, ranks, tiers, etc.).</li>
                   <li><strong className="text-slate-900 dark:text-slate-100">Transaction operations:</strong> Platform builds, estimates, batches, executes. Registry and app config on-chain; resolves ecosystem and app directory and handle→ID.</li>
                 </ul>
               </DesignBlock>
@@ -132,7 +133,7 @@ export default function ArchitecturePage() {
             <div className="mt-5 space-y-4">
               <DesignBlock>
                 <ul className={listClass}>
-                  <li><strong className="text-slate-900 dark:text-slate-100">Frontend and backend:</strong> Game frontend talks to Next.js game backend; modular UI, responsive (desktop and mobile). Backend uses platform for catalogs, events, competitions, balances (game pass), distribution, NFT (badge). Game-specific logic (score verification, achievements, badge tiers) in game backend and Move contracts.</li>
+                  <li><strong className="text-slate-900 dark:text-slate-100">Frontend and backend:</strong> Game frontend talks to Next.js game backend; modular UI, responsive (desktop and mobile). Backend uses platform for catalogs, events, competitions, balances (game pass), distribution, NFT (badge), Insignia where used for per-wallet progression bytes. Game-specific logic (score verification, achievements, badge tiers) in game backend and Move contracts.</li>
                   <li><strong className="text-slate-900 dark:text-slate-100">Tournaments:</strong> Create tournaments; players enter and submit scores. Pools may have creator ante; ticket values added on entry. Thresholds met → creators and winners earn. Platform handles lifecycle (create, enter, submit-score, payout); game defines rules and scoring.</li>
                   <li><strong className="text-slate-900 dark:text-slate-100">Store:</strong> Consumables, credits, tournament tickets. Game backend and platform handle catalog, inventory, transaction build; wallet signs and submits.</li>
                   <li><strong className="text-slate-900 dark:text-slate-100">Soulbound badges:</strong> Non-transferable NFT that evolves; tier (Starter–Legendary) sets discounts on store, gameplay, tickets. Platform does mint/upgrade; game defines tier rules.</li>

@@ -10,7 +10,7 @@ This document describes, in explicit and expanded form, what has been built in t
 
 ## Key Points: Aqueduct Platform in One Place
 
-- **Product:** **Aqueduct Platform** — shared infrastructure on **Sui** designed as **SaaS**. Multiple tenants (ecosystems/apps) consume the same deployment. Not a game or end-user product; apps use it for game pass, store, events, tournaments (Regatta), milestones (Sustain: Rain), stats, vaults (Glacier), NFTs (Shipyard), config, and transaction services (Channel).
+- **Product:** **Aqueduct Platform** — shared infrastructure on **Sui** designed as **SaaS**. Multiple tenants (ecosystems/apps) consume the same deployment. Not a game or end-user product; apps use it for game pass, store, events, tournaments (Regatta), milestones (Sustain: Rain), stats, vaults (Glacier), NFTs (Shipyard), per-player progression (Insignia: opaque key→bytes per wallet), config, and transaction services (Channel).
 
 - **Principle:** **Apps define; platform takes action.** The platform does not define product rules, pack offerings, milestone conditions, or event semantics. Apps define what they want; the platform executes, stores definitions on-chain when needed, and provides shared infra. Apps own the “what”; platform owns the “how.”
 
@@ -18,13 +18,13 @@ This document describes, in explicit and expanded form, what has been built in t
 
 - **Auth:** **Corridor** = app-scoped auth. Identity from **CorridorCap** or **CorridorAdminCap** (API key + capability object ID in header/query); ecosystem_id and app_id come from the cap. **Harbor Master** = platform operator only (e.g. health, verify-wallet, wallet-reserves, ecosystems, migrate); auth via same-origin or X-Admin-Wallet. **No-defaults policy:** no implicit API key or ecosystem; all must be explicit for multi-tenancy.
 
-- **Core modules (brand → purpose):** **Chart** (ecosystem registry, app directory, handle→ID); **Helm** (app behavior config, feature flags, knobs); **Conduit** (API layer); **Corridor** (auth only); **Estuary** (identity, wallet connect, optional entitlements grant/revoke); **Waterline** (entitlement/usage gate; v1 always OK); **Station** (events: create, enter, submit); **Regatta** (competition: create, enter, submit-score, payout); **Terminal** (commerce: purchase from Stockroom); **Channel** (generic Sui token transfers: build, estimate, batch, execute); **Sustain** (distribution: single path for tokens, items, credits; Rain = milestones/Regatta/achievements); **Reservoir** (balances and items: credits, tickets, merge); **Glacier** (locked vaults: add, release-distribute); **Shipyard** (NFTs: mint, upgrade, merge, transfer policies); **Hydroscope** (stats, leaderboard); **Gauge** (price discovery: token USD); **Aquifer** (definition storage: key→value, app-defined); **Insignia** (per-player state); **Sonar** (read-only chain query proxy); **Harbor Master** (platform ops); **Buoy** (liveness); **Water Quality** (readiness/safety).
+- **Core modules (brand → purpose):** **Chart** (ecosystem registry, app directory, handle→ID); **Helm** (app behavior config, feature flags, knobs); **Conduit** (API layer); **Corridor** (auth only); **Estuary** (identity, wallet connect, optional entitlements grant/revoke); **Waterline** (entitlement/usage gate; v1 always OK); **Station** (events: create, enter, submit); **Regatta** (competition: create, enter, submit-score, payout); **Terminal** (commerce: purchase from Stockroom); **Channel** (generic Sui token transfers: build, estimate, batch, execute); **Sustain** (distribution: single path for tokens, items, credits; Rain = milestones/Regatta/achievements); **Reservoir** (balances and items: credits, tickets, merge); **Glacier** (locked vaults: add, release-distribute); **Shipyard** (NFTs: mint, upgrade, merge, transfer policies); **Hydroscope** (stats, leaderboard); **Gauge** (price discovery: token USD); **Aquifer** (definition storage: key→value, app-defined); **Insignia** (`insignia` package, `insignia_registry.move`: per-player progression store, opaque key→value bytes per ecosystem_id, app_id, wallet; apps interpret keys/values—badges, ranks, tiers, etc.); **Sonar** (read-only chain query proxy); **Harbor Master** (platform ops); **Buoy** (liveness); **Water Quality** (readiness/safety).
 
-- **Services at a glance:** Game Pass (credits, tickets, packs, consume, purchase-pack); Store (Provisions = item definitions, Stockroom = purchasable offers; Terminal purchase, inventory, consume, merge); Events (Station: time-bounded, participants, submissions); Regatta (enter with ticket, submit-score, leaderboard, payout via Sustain); Milestones (Sustain: Rain — evaluate, claim, claimed); Sustain (build-distribute; distribute disabled); Stats (Hydroscope: update, read by address); Config (network, RPC, wallet module URL); Tokens (balance by address); Vaults (Glacier: create, add, release-distribute, payouts); Admin (credits/tickets, inventory, verify-wallet, wallet-reserves, ecosystems, vaults); Health; Gauge; Channel (tx build, estimate, batch, execute).
+- **Services at a glance:** Game Pass (credits, tickets, packs, consume, purchase-pack); Store (Provisions = item definitions, Stockroom = purchasable offers; Terminal purchase, inventory, consume, merge); Events (Station: time-bounded, participants, submissions); Regatta (enter with ticket, submit-score, leaderboard, payout via Sustain); Milestones (Sustain: Rain — evaluate, claim, claimed); Sustain (build-distribute; distribute disabled); Stats (Hydroscope: update, read by address); Insignia (per-player progression: opaque key→value bytes per app and wallet via `/api/insignia`); Config (network, RPC, wallet module URL); Tokens (balance by address); Vaults (Glacier: create, add, release-distribute, payouts); Admin (credits/tickets, inventory, verify-wallet, wallet-reserves, ecosystems, vaults); Health; Gauge; Channel (tx build, estimate, batch, execute).
 
 - **Contracts:** **Modular Sui Move** packages; all **generic** (opaque payloads, app-defined keys and semantics). Deploy order: **core** (chart_registry, chart, harbor_master) → **station** → **regatta** → **reservoir**, **provisions**, **terminal**, **glacier**, **sustain**, **helm**, **hydroscope**, **shipyard**, **aquifer**, **insignia**, **anchor**, **exchange**, **barometer**, **estuary**, **stockroom** as per dependency graph. Game contracts (e.g. suitwo_game) depend on platform packages; platform does not encode any specific game.
 
-- **Backend:** **Next.js** (App Router) with **TypeScript**. Single API surface under `app/api/`: corridor, chart, helm, estuary, channel, station, regatta, reservoir, terminal, provisions, glacier, sustain, hydroscope, aquifer, shipyard, gauge, anchor, exchange, barometer, buoy, water-quality, sonar, admin, harbor-master. Lib: services (ecosystem-registry, chart, helm, station, regatta, reservoir, terminal, glacier, sustain, milestones, shipyard, entitlement, waterline, channel/transaction-helpers, locked-vault), Sui client, water-quality, corridor auth.
+- **Backend:** **Next.js** (App Router) with **TypeScript**. Single API surface under `app/api/`: corridor, chart, helm, estuary, channel, station, regatta, reservoir, terminal, provisions, glacier, sustain, hydroscope, aquifer, insignia, shipyard, gauge, anchor, exchange, barometer, buoy, water-quality, sonar, admin, harbor-master. Lib: services (ecosystem-registry, chart, helm, station, regatta, reservoir, terminal, glacier, sustain, milestones, shipyard, insignia, entitlement, waterline, channel/transaction-helpers, locked-vault), Sui client, water-quality, corridor auth.
 
 - **Deployment:** Platform backend deployable independently; contracts deployed in order (see deployment docs). **Do not edit .env** for deployment IDs; record package/object IDs in the appropriate DEPLOYMENT_IDS or deployment summary file (see workspace rules). Apps (e.g. shooter-game backend) point to platform API URL and use Corridor for app-scoped calls.
 
@@ -72,13 +72,14 @@ Paths are relative to the project root. The platform lives under **`Aqueduct Pla
 - **Sustain:** `sustain/evaluate/route.ts`, `sustain/claim/route.ts`, `sustain/claimed/route.ts`, `sustain/build-issue/route.ts`, `sustain/build-distribute/route.ts`, `sustain/distribute/route.ts` (410 disabled), `sustain/events/[id]/prepare-distribution/route.ts`, `sustain/events/[id]/mark-distribution-complete/route.ts`.
 - **Hydroscope:** `hydroscope/[address]/route.ts`, `hydroscope/update/route.ts`, `hydroscope/leaderboard/route.ts`, `hydroscope/participants/[address]/claims/route.ts`, `hydroscope/participants/[address]/anchor-summary/route.ts`.
 - **Aquifer:** `aquifer/route.ts`, `aquifer/definitions/route.ts`, `aquifer/definitions/[key]/route.ts` — definition storage read/set via Channel.
+- **Insignia:** `insignia/route.ts` — per-player progression: opaque key→value bytes per ecosystem_id, app_id, wallet (`insignia_registry.move` on-chain); apps interpret keys/values (badges, ranks, tiers, etc.); Corridor as for other app-scoped routes.
 - **Shipyard:** `shipyard/mint/route.ts`, `shipyard/upgrade/route.ts`, `shipyard/burn/route.ts`, `shipyard/merge/route.ts`, `shipyard/merge/recipes/route.ts`, `shipyard/merge/complete/route.ts`, `shipyard/transfer-policies/route.ts`, `shipyard/has-badge/route.ts`, `shipyard/kiosk/[id]/route.ts`, `shipyard/[objectId]/image/route.ts` (public read-only).
 - **Gauge:** `gauge/route.ts` — token USD prices; Corridor.
 - **Anchor:** `anchor/sessions/route.ts`, `anchor/claims/route.ts`, `anchor/claims/[claimId]/route.ts`, `anchor/verify/route.ts`.
 - **Exchange / Barometer:** `exchange/route.ts`, `exchange/[id]/submit/route.ts`; `barometer/route.ts`, `barometer/[id]/submit/route.ts` — Station extensions (submit re-exports).
 - **Stockroom:** `stockroom/offers/route.ts`.
 - **Sonar:** `sonar/route.ts` — POST chain query (getObject, getDynamicFields, getTransactionBlock, etc.); `sonar/balance/[address]/route.ts` — balance read (query `?coinType=...`).
-- **Ops:** `buoy/route.ts` (liveness), `water-quality/route.ts` (readiness), `insignia/route.ts` (per-player state).
+- **Ops:** `buoy/route.ts` (liveness), `water-quality/route.ts` (readiness).
 - **Admin:** `admin/reservoir/list-players/route.ts`, `admin/tide/run/route.ts` — Corridor or as documented.
 - **Harbor Master:** `harbor-master/` — health, verify-wallet, wallet-reserves, ecosystems, migrate-ecosystem-data; auth via same-origin or X-Admin-Wallet.
 
@@ -135,7 +136,7 @@ Paths are relative to the project root. The platform lives under **`Aqueduct Pla
 
 ### 1.1 Core Framework and Runtime
 
-**Next.js** (App Router) is the platform backend framework. All routes live under `Aqueduct Platform/backend/app/api/`, grouped by Aqueduct module (corridor, chart, helm, estuary, channel, station, regatta, reservoir, terminal, provisions, glacier, sustain, hydroscope, aquifer, shipyard, gauge, anchor, exchange, barometer, stockroom, sonar, buoy, water-quality, insignia, admin, harbor-master). The backend is API-only: no server-rendered pages for end users; layout and root exist for Next.js. Build and dev: `npm run dev` (development), `npm run build` then `npm run start` (production). Port from env or default 3000.
+**Next.js** (App Router) is the platform backend framework. All routes live under `Aqueduct Platform/backend/app/api/`, grouped by Aqueduct module (corridor, chart, helm, estuary, channel, station, regatta, reservoir, terminal, provisions, glacier, sustain, hydroscope, aquifer, insignia, shipyard, gauge, anchor, exchange, barometer, stockroom, sonar, buoy, water-quality, admin, harbor-master). The backend is API-only: no server-rendered pages for end users; layout and root exist for Next.js. Build and dev: `npm run dev` (development), `npm run build` then `npm run start` (production). Port from env or default 3000.
 
 **TypeScript** is used throughout the backend: route handlers, lib services, config, validators. Strict typing; types and interfaces live next to services or in shared platform types. No `any` escape hatches in core paths. Type checking via `tsc` (or Next build).
 
@@ -153,7 +154,7 @@ The platform **reads and writes** Sui via **@mysten/sui** (or equivalent) in the
 
 ### 1.4 No Database (On-Chain Storage)
 
-The platform **does not use a separate database** (no MongoDB, PostgreSQL, etc.) for event data, participants, leaderboards, or app state. All such data is stored **on Sui** in smart contracts (Station, Reservoir, Hydroscope, Aquifer, etc.). The backend reads from chain via Sui RPC (or Sonar). **Exception:** API keys and ecosystem configuration are stored in **environment variables** (or in-memory/minimal key-value); see Section 1.7 and Codebase (Environment variables).
+The platform **does not use a separate database** (no MongoDB, PostgreSQL, etc.) for event data, participants, leaderboards, or app state. All such data is stored **on Sui** in smart contracts (Station, Reservoir, Hydroscope, Aquifer, Insignia, etc.). The backend reads from chain via Sui RPC (or Sonar). **Exception:** API keys and ecosystem configuration are stored in **environment variables** (or in-memory/minimal key-value); see Section 1.7 and Codebase (Environment variables).
 
 ### 1.5 Smart Contracts (Sui Move)
 
@@ -240,6 +241,7 @@ Shared types and validators: `lib/services/platform/validators/platform-validato
 - **Sustain Rain:** POST evaluate (definitionKey, address, stats from Hydroscope) → list of eligible milestones; POST claim → build payout tx for app to sign; GET claimed → claimed milestone IDs.
 - **Regatta:** create → build Station event + Regatta config (game signs). enter → build consume ticket + station::enter (client signs). submit-score → build Anchor claim + station::submit_claim_and_record_tournament_score (one tx; client signs).
 - **Glacier:** add → build add_to_vault; prepare-distribution (Sustain) → vaultReleaseParams for event; release-distribute → build or execute release_distribute; GET payouts → payout history.
+- **Insignia:** Per-player progression on-chain (`insignia` package, `insignia_registry.move`): opaque key→value bytes scoped by ecosystem_id, app_id, and wallet. Apps interpret keys and values (badges, ranks, tiers, etc.). Exposed via `/api/insignia` and `insignia-service`.
 
 ### 2.8 No-Defaults and Multi-Tenancy
 
@@ -279,11 +281,13 @@ The platform has **no implicit defaults** for API keys, ecosystems, or app confi
 
 15. **Aquifer** — Definition storage (key→value; opaque). GET aquifer/definitions, GET aquifer/definitions/[key]. Set/remove via Channel build (CorridorAdminCap). Used by Rain (milestone definitions), Shipyard (badge tier definitions), etc.
 
-16. **Shipyard** — NFTs: mint, upgrade, burn, merge, recipes, merge/complete, transfer-policies, has-badge, kiosk/[id], [objectId]/image (public). Corridor required except image.
+16. **Insignia** — Per-player progression store (`insignia_registry.move`): opaque key→value bytes per (ecosystem_id, app_id, wallet). Apps assign meaning (badges, ranks, tiers, etc.). API: `/api/insignia` (insignia-service); on-chain writes typically via build-and-sign like other app-scoped modules.
 
-17. **Anchor** — Sessions, claims, claims/[claimId], verify. Regatta submit-score uses Anchor claim + Station in one tx.
+17. **Shipyard** — NFTs: mint, upgrade, burn, merge, recipes, merge/complete, transfer-policies, has-badge, kiosk/[id], [objectId]/image (public). Corridor required except image.
 
-18. **Sonar** — Read-only chain proxy: POST sonar (getObject, getDynamicFields, getTransactionBlock, waitForTransaction, devInspectTransactionBlock). GET sonar/balance/[address]. Enables platform-mediated reads when configured.
+18. **Anchor** — Sessions, claims, claims/[claimId], verify. Regatta submit-score uses Anchor claim + Station in one tx.
+
+19. **Sonar** — Read-only chain proxy: POST sonar (getObject, getDynamicFields, getTransactionBlock, waitForTransaction, devInspectTransactionBlock). GET sonar/balance/[address]. Enables platform-mediated reads when configured.
 
 ---
 
@@ -314,7 +318,7 @@ The platform has **no implicit defaults** for API keys, ecosystems, or app confi
 
 - **Shipyard:** Mint, upgrade, burn, merge, recipes, transfer policies, has-badge, kiosk, image.
 - **Aquifer:** Definition storage (key→value); definitions list and by key.
-- **Insignia:** Per-player state (generic key-value).
+- **Insignia:** `insignia` package / `insignia_registry.move` — per-player progression: opaque key→value bytes per ecosystem, app, and wallet; apps interpret (badges, ranks, tiers, etc.).
 - **Hydroscope:** Stats by address, update, leaderboard, participants claims.
 
 ### 4.6 Ops and Admin
@@ -369,7 +373,7 @@ The platform has **no implicit defaults** for API keys, ecosystems, or app confi
 When promoting yourself or discussing this project, you can accurately say that you (with your team or AI assistance) have:
 
 - Designed and built **Aqueduct Platform**: **shared infrastructure on Sui** as **SaaS** for multiple apps/ecosystems; **apps define, platform executes**; **build-and-sign** pattern throughout; no app/game keys on platform.
-- Delivered **modular API surface**: Game Pass (Reservoir), Store (Terminal, Provisions, Stockroom), Events (Station), Regatta (tournaments), Milestones (Sustain: Rain), Sustain (distribution), Reservoir (balances/items/merge), Glacier (vaults), Shipyard (NFTs), Hydroscope (stats), Gauge (prices), Aquifer (definitions), Channel (tx build/estimate/batch/execute), Anchor, Sonar, Config, Admin, Health.
+- Delivered **modular API surface**: Game Pass (Reservoir), Store (Terminal, Provisions, Stockroom), Events (Station), Regatta (tournaments), Milestones (Sustain: Rain), Sustain (distribution), Reservoir (balances/items/merge), Glacier (vaults), Shipyard (NFTs), Hydroscope (stats), Gauge (prices), Aquifer (definitions), Insignia (per-player progression), Channel (tx build/estimate/batch/execute), Anchor, Sonar, Config, Admin, Health.
 - Implemented **Corridor** (app-scoped auth via caps, identity from cap only) and **Harbor Master** (platform ops); **no-defaults** policy for multi-tenancy; **ecosystem-only** config (no app_id-only Chart/Helm).
 - Wrote and deployed **generic Sui Move** contracts: core (chart_registry, chart, harbor_master), station, regatta, reservoir, provisions, terminal, glacier, sustain, helm, hydroscope, shipyard, aquifer, insignia, anchor, exchange, barometer, estuary, stockroom — all **opaque payloads**, app-defined keys and semantics.
 - Built **Tide** (scheduler for event lifecycle and distribution), **Anchor** (sessions and claims for Regatta submit-score), and **migration** services for cutover from legacy to platform.

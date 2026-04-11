@@ -21,7 +21,7 @@ export default function AqueductPage() {
         className="mt-10 text-slate-600 dark:text-slate-400 text-sm leading-relaxed opacity-0 animate-fade-in-up"
         style={{ animationDelay: "120ms" }}
       >
-        Aqueduct is shared infrastructure on Sui designed as SaaS. Multiple tenants (ecosystems and apps) consume the same deployment. Apps define catalogs, participation flows, distribution rules, and NFT collections. The platform provides event services, commerce, vaults, transaction operations, distribution, NFT operations, identity and wallet connect, entitlements, balances, and aggregation.
+        Aqueduct is shared infrastructure on Sui designed as SaaS. Multiple tenants (ecosystems and apps) consume the same deployment. Apps define catalogs, participation flows, distribution rules, and NFT collections. The platform provides event services, commerce, vaults, transaction operations, distribution, NFT operations, identity and wallet connect, entitlements, balances, per-player progression (Insignia: opaque key→bytes per wallet and app), and aggregation.
       </p>
 
       <div className="mt-10 space-y-8">
@@ -82,15 +82,46 @@ export default function AqueductPage() {
                   <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Shipyard</td><td className="px-4 py-2.5">Apps define NFT collections; platform executes NFT operations</td></tr>
                   <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Hydroscope</td><td className="px-4 py-2.5">Aggregation, rankings</td></tr>
                   <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Aquifer</td><td className="px-4 py-2.5">Definition storage (key-value)</td></tr>
+                  <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Insignia</td><td className="px-4 py-2.5">Per-player progression store (<code className="text-xs">insignia</code> package, <code className="text-xs">insignia_registry.move</code>): opaque key→value bytes per ecosystem, app, and wallet; apps interpret (badges, ranks, tiers, etc.)</td></tr>
                   <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Sonar</td><td className="px-4 py-2.5">Read-only chain query proxy</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
         </section>
+
+        <section
+          className={`opacity-0 animate-fade-in-up ${sectionCardClass}`}
+          style={{ animationDelay: "320ms" }}
+        >
+          <div className="p-6">
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
+              Architecture diagram
+            </h2>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Module groups and flows (interactive viewer from diagrams.net).{" "}
+              <a
+                href="/aqueduct-architecture-diagram.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-accent link-underline font-medium"
+              >
+                Open full page
+              </a>
+            </p>
+            <div className="mt-4 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 shadow-sm">
+              <iframe
+                title="Aqueduct platform architecture diagram"
+                src="/aqueduct-architecture-diagram.html"
+                className="w-full h-[min(85vh,920px)] border-0 bg-slate-50 dark:bg-slate-900"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </section>
       </div>
 
-      <div className="mt-12 opacity-0 animate-fade-in-up" style={{ animationDelay: "340ms" }}>
+      <div className="mt-12 opacity-0 animate-fade-in-up" style={{ animationDelay: "420ms" }}>
         <Link href="/projects" className="link-accent link-underline inline-flex items-center text-sm font-medium gap-1 group">
           <span className="inline-block transition-transform duration-200 group-hover:-translate-x-0.5">←</span> View all projects
         </Link>

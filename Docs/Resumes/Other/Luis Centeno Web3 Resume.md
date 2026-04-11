@@ -67,9 +67,9 @@ Seeking to contribute to teams building real world decentralized products and in
 
 **Modular Web3 Application Infrastructure**
 
-Designed and prototyped a modular blockchain platform architecture supporting decentralized applications, games, and digital utilities. The platform provides reusable infrastructure for identity management, transaction orchestration, NFT lifecycle management, rewards distribution, and application analytics.
+Designed and prototyped a modular blockchain platform architecture supporting decentralized applications, games, and digital utilities. The platform provides reusable infrastructure for identity management, transaction orchestration, NFT lifecycle management, rewards distribution, per-player progression (Insignia store: opaque keys to value bytes per wallet), and application analytics.
 
-Platform modules include systems for token transaction execution, digital asset creation, balance storage, vault and treasury management, event coordination, and application configuration. The architecture enables applications to integrate blockchain functionality through clearly defined services rather than building individual blockchain logic from scratch.
+Platform modules include systems for token transaction execution, digital asset creation, balance storage, vault and treasury management, event coordination, per-wallet progression storage, and application configuration. The architecture enables applications to integrate blockchain functionality through clearly defined services rather than building individual blockchain logic from scratch.
 
 This project demonstrates system level thinking around decentralized application infrastructure and how blockchain functionality can be integrated into modern application stacks.
 
