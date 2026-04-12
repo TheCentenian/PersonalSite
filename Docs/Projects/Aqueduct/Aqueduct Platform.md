@@ -100,6 +100,26 @@ Provides vault and treasury functionality for assets that must remain locked or 
 
 ---
 
+### Events and coordination
+
+**Station**
+
+The station package provides generic on-chain event coordination: time-bounded activities where participants enter, submit payloads, and the platform records outcomes. Semantics stay with the application; Station supplies the shared lifecycle and storage pattern.
+
+**Regatta**
+
+The regatta package extends Station for tournaments and competitions (enter, score submission, ranking, payout hooks). The path in use today is **all-versus-all** competition; the architecture is meant to support additional competition shapes over time.
+
+**Barometer** (planned extension)
+
+The barometer package is intended for poll- and survey-style experiences built on Station, mapped to **Station event type 8**. It is part of the roadmap rather than a fully rolled-out product surface alongside Station and Regatta.
+
+**Exchange** (planned extension)
+
+The exchange package is intended for auction-style experiences built on Station, mapped to **Station event type 9**. Like Barometer, it is a **future extension** on the same event model, not yet at parity with the core event and tournament flows.
+
+---
+
 ### Rewards and Incentives
 
 **Sustain**
@@ -168,6 +188,7 @@ The Aqueduct platform demonstrates several important concepts in decentralized a
 - Secure wallet based transaction execution
 - Infrastructure for digital asset ownership and lifecycle management
 - Reward and incentive systems integrated with blockchain assets
+- Event coordination that can grow from generic activities to tournaments, with room for further Station-aligned modes as extensions
 - Scalable infrastructure capable of supporting multiple applications within a shared ecosystem
 
 ---

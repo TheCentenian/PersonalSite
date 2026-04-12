@@ -93,7 +93,7 @@ For each project page: title, 1–2 short paragraphs, 3–5 bullet highlights, o
 ### Step 2.4 — Architecture (where you shine)
 - [ ] Source: PORTFOLIO docs + Website.md (“Aqueduct module diagrams, system flow, Evarra Tracker flow”).
 - [ ] Content: One or two high-level diagrams or descriptions:
-  - Aqueduct: apps → platform (Conduit/Corridor, Chart, Helm, Station, Regatta, Terminal, Sustain, Insignia, etc.) and “apps define, platform executes.”
+  - Aqueduct: apps → platform (Conduit/Corridor, Chart, Helm, Station, Regatta, Barometer/Exchange as planned extensions, Terminal, Sustain, Insignia, etc.) and “apps define, platform executes.”
   - Evarra Tracker: wallet/goals → backend/Sui → translation → UI (optional diagram).
   - SuiTwo: game ↔ backend ↔ platform (optional).
 - [ ] Prefer diagrams (Mermaid, Excalidraw export, or simple SVG) over long prose. Engineers like visuals.

@@ -18,9 +18,9 @@ This document describes, in explicit and expanded form, what has been built in t
 
 - **Auth:** **Corridor** = app-scoped auth. Identity from **CorridorCap** or **CorridorAdminCap** (API key + capability object ID in header/query); ecosystem_id and app_id come from the cap. **Harbor Master** = platform operator only (e.g. health, verify-wallet, wallet-reserves, ecosystems, migrate); auth via same-origin or X-Admin-Wallet. **No-defaults policy:** no implicit API key or ecosystem; all must be explicit for multi-tenancy.
 
-- **Core modules (brand → purpose):** **Chart** (ecosystem registry, app directory, handle→ID); **Helm** (app behavior config, feature flags, knobs); **Conduit** (API layer); **Corridor** (auth only); **Estuary** (identity, wallet connect, optional entitlements grant/revoke); **Waterline** (entitlement/usage gate; v1 always OK); **Station** (events: create, enter, submit); **Regatta** (competition: create, enter, submit-score, payout); **Terminal** (commerce: purchase from Stockroom); **Channel** (generic Sui token transfers: build, estimate, batch, execute); **Sustain** (distribution: single path for tokens, items, credits; Rain = milestones/Regatta/achievements); **Reservoir** (balances and items: credits, tickets, merge); **Glacier** (locked vaults: add, release-distribute); **Shipyard** (NFTs: mint, upgrade, merge, transfer policies); **Hydroscope** (stats, leaderboard); **Gauge** (price discovery: token USD); **Aquifer** (definition storage: key→value, app-defined); **Insignia** (wallet-scoped key–value bytes; semantics app-defined); **Sonar** (read-only chain query proxy); **Harbor Master** (platform ops); **Buoy** (liveness); **Water Quality** (readiness/safety).
+- **Core modules (brand → purpose):** **Chart** (ecosystem registry, app directory, handle→ID); **Helm** (app behavior config, feature flags, knobs); **Conduit** (API layer); **Corridor** (auth only); **Estuary** (identity, wallet connect, optional entitlements grant/revoke); **Waterline** (entitlement/usage gate; v1 always OK); **Station** (generic events and coordination); **Regatta** (tournament extension on Station); **Barometer** (poll/survey extension; **planned**); **Exchange** (auction extension; **planned**); **Terminal** (commerce: purchase from Stockroom); **Channel** (generic Sui token transfers: build, estimate, batch, execute); **Sustain** (distribution: single path for tokens, items, credits; Rain = milestones/Regatta/achievements); **Reservoir** (balances and items: credits, tickets, merge); **Glacier** (locked vaults: add, release-distribute); **Shipyard** (NFTs: mint, upgrade, merge, transfer policies); **Hydroscope** (stats, leaderboard); **Gauge** (price discovery: token USD); **Aquifer** (definition storage: key→value, app-defined); **Insignia** (wallet-scoped key–value bytes; semantics app-defined); **Sonar** (read-only chain query proxy); **Harbor Master** (platform ops); **Buoy** (liveness); **Water Quality** (readiness/safety).
 
-- **Services at a glance:** Game Pass (credits, tickets, packs, consume, purchase-pack); Store (Provisions = item definitions, Stockroom = purchasable offers; Terminal purchase, inventory, consume, merge); Events (Station: time-bounded, participants, submissions); Regatta (enter with ticket, submit-score, leaderboard, payout via Sustain); Milestones (Sustain: Rain — evaluate, claim, claimed); Sustain (build-distribute; distribute disabled); Stats (Hydroscope: update, read by address); Insignia (wallet-scoped records via `/api/insignia`); Config (network, RPC, wallet module URL); Tokens (balance by address); Vaults (Glacier: create, add, release-distribute, payouts); Admin (credits/tickets, inventory, verify-wallet, wallet-reserves, ecosystems, vaults); Health; Gauge; Channel (tx build, estimate, batch, execute).
+- **Services at a glance:** Game Pass (credits, tickets, packs, consume, purchase-pack); Store (Provisions = item definitions, Stockroom = purchasable offers; Terminal purchase, inventory, consume, merge); Events (Station: time-bounded, participants, submissions); Regatta (enter with ticket, submit-score, leaderboard, payout via Sustain; **all-vs-all** today); Barometer & Exchange (Station types 8/9; **planned extensions**); Milestones (Sustain: Rain — evaluate, claim, claimed); Sustain (build-distribute; distribute disabled); Stats (Hydroscope: update, read by address); Insignia (wallet-scoped records via `/api/insignia`); Config (network, RPC, wallet module URL); Tokens (balance by address); Vaults (Glacier: create, add, release-distribute, payouts); Admin (credits/tickets, inventory, verify-wallet, wallet-reserves, ecosystems, vaults); Health; Gauge; Channel (tx build, estimate, batch, execute).
 
 - **Contracts:** **Modular Sui Move** packages; all **generic** (opaque payloads, app-defined keys and semantics). Deploy order: **core** (chart_registry, chart, harbor_master) → **station** → **regatta** → **reservoir**, **provisions**, **terminal**, **glacier**, **sustain**, **helm**, **hydroscope**, **shipyard**, **aquifer**, **insignia**, **anchor**, **exchange**, **barometer**, **estuary**, **stockroom** as per dependency graph. Game contracts (e.g. suitwo_game) depend on platform packages; platform does not encode any specific game.
 
@@ -36,13 +36,15 @@ This document describes, in explicit and expanded form, what has been built in t
 
 - **Anchor:** Session and claim submission for trusted results and anti-replay. Regatta submit-score uses **Anchor + Station**: one tx submits claim then Station consumes it for the event. APIs: sessions, claims, claims/[claimId], verify. Hydroscope participants/[address]/anchor-summary and participants/[address]/claims use Anchor-derived data.
 
-- **Competition types:** Regatta supports competition-type abstraction (`lib/services/station/regatta/competition-types/` — base, all-vs-all, types). Submission payload is app-defined JSON; contract does not fix field names (e.g. score, coins).
+- **Events (Station family):** **Station** (`station` package, `station.move`) — generic events and coordination. **Regatta** (`regatta` package) — tournament and competition extension on Station; **all-vs-all** is what ships in production today, with more competition types planned (`competition-types/` — base, all-vs-all, types). **Barometer** (`barometer` package) — poll/survey extension, **Station event type 8**; **planned extension** (package and routes exist; full flows and schemas still evolving). **Exchange** (`exchange` package) — auction extension, **Station event type 9**; same **planned extension** status.
+
+- **Competition types:** Regatta’s competition-type layer (`lib/services/station/regatta/competition-types/` — base, all-vs-all, types) is built for multiple shapes; **only all-vs-all is implemented end-to-end today**; others are future work. Submission payload remains app-defined JSON; contracts do not fix field names (e.g. score, coins).
 
 - **Response shapes:** Build endpoints return unsigned transaction (e.g. `transactionBytes` base64, or `channelBuildParams`) for app/game to sign and submit. Sustain distribute returns 410 (disabled); build-distribute is primary. Gauge returns token USD values; Sonar returns chain query results (getObject, getDynamicFields, etc.).
 
 - **Modular for maintainability:** Service-per-module under `lib/services/`; corridor auth and request context centralized; batch-handlers for Channel batch; platform validators and errors in shared modules. Ecosystem-only config (no app_id-only Chart/Helm); all app-scoped routes require Corridor.
 
-- **Known limitations and future work:** Logbook (audit trail), Lighthouse (advisory alerts), Dock (not started); Anchor and Barometer/Exchange event schemas partial; Water Quality signals can be extended. Sustain Dew/Mist, Marina, Workshop, Charter, Arbiter, Levee, Beacon are future or parked. See PLATFORM_BUILD_OUT_REMAINING.md.
+- **Known limitations and future work:** Logbook (audit trail), Lighthouse (advisory alerts), Dock (not started); **Barometer** and **Exchange** are **planned Station extensions** (event types 8 and 9)—schemas and product flows incomplete vs Station/Regatta; Anchor alignment for those modes still TBD. Water Quality signals can be extended. Sustain Dew/Mist, Marina, Workshop, Charter, Arbiter, Levee, Beacon are future or parked. See PLATFORM_BUILD_OUT_REMAINING.md.
 
 If you have not worked on the platform in a few months, you can still accurately describe it using this document; the technical content reflects the current codebase and can be updated when you resume work.
 
@@ -76,7 +78,8 @@ Paths are relative to the project root. The platform lives under **`Aqueduct Pla
 - **Shipyard:** `shipyard/mint/route.ts`, `shipyard/upgrade/route.ts`, `shipyard/burn/route.ts`, `shipyard/merge/route.ts`, `shipyard/merge/recipes/route.ts`, `shipyard/merge/complete/route.ts`, `shipyard/transfer-policies/route.ts`, `shipyard/has-badge/route.ts`, `shipyard/kiosk/[id]/route.ts`, `shipyard/[objectId]/image/route.ts` (public read-only).
 - **Gauge:** `gauge/route.ts` — token USD prices; Corridor.
 - **Anchor:** `anchor/sessions/route.ts`, `anchor/claims/route.ts`, `anchor/claims/[claimId]/route.ts`, `anchor/verify/route.ts`.
-- **Exchange / Barometer:** `exchange/route.ts`, `exchange/[id]/submit/route.ts`; `barometer/route.ts`, `barometer/[id]/submit/route.ts` — Station extensions (submit re-exports).
+- **Barometer:** `barometer/route.ts`, `barometer/[id]/submit/route.ts` — poll/survey extension (Station **event type 8**); **planned extension** (routes/schemas partial vs Station/Regatta).
+- **Exchange:** `exchange/route.ts`, `exchange/[id]/submit/route.ts` — auction extension (Station **event type 9**); **planned extension** (same status as Barometer).
 - **Stockroom:** `stockroom/offers/route.ts`.
 - **Sonar:** `sonar/route.ts` — POST chain query (getObject, getDynamicFields, getTransactionBlock, etc.); `sonar/balance/[address]/route.ts` — balance read (query `?coinType=...`).
 - **Ops:** `buoy/route.ts` (liveness), `water-quality/route.ts` (readiness).
@@ -201,6 +204,8 @@ Platform backend is deployable to **Node.js** hosts or **Vercel** (API routes). 
 | Waterline | — | waterline-service | (gates other services) |
 | Station | station | station-service | /api/station/* |
 | Regatta | regatta | regatta-extension-service | /api/regatta/*, /api/tournaments/* |
+| Barometer | barometer | (partial / planned) | /api/barometer/* — Station type 8, **planned extension** |
+| Exchange | exchange | (partial / planned) | /api/exchange/* — Station type 9, **planned extension** |
 | Terminal | terminal_store, reservoir | terminal-service, reservoir-service | /api/terminal/*, /api/reservoir/* |
 | Channel | — | channel-service, transaction-helpers | /api/channel/* |
 | Sustain | sustain | sustain-distribution-service | /api/sustain/* |
@@ -228,7 +233,7 @@ Request context is established in middleware or route handlers: read API key and
 
 ### 2.5 Route and Service Organization
 
-**Routes** are grouped by Aqueduct module under `app/api/<module>/`. Each module has one or more route files (e.g. sustain/evaluate, sustain/claim, sustain/claimed). Shared behavior (auth, validation) is centralized in auth and api-handler. **Services** live under `lib/services/<module>/`: one primary service file per module (e.g. station-service.ts, reservoir-service.ts), with submodules for chain-read, batch, or build (e.g. channel/batch/batch-handlers.ts, sustain/distribution/sustain-distribution.ts). Regatta extends Station (regatta-extension-service, competition-types). No game logic in platform; all modules are app-agnostic and keyed by ecosystem_id and app_id.
+**Routes** are grouped by Aqueduct module under `app/api/<module>/`. Each module has one or more route files (e.g. sustain/evaluate, sustain/claim, sustain/claimed). Shared behavior (auth, validation) is centralized in auth and api-handler. **Services** live under `lib/services/<module>/`: one primary service file per module (e.g. station-service.ts, reservoir-service.ts), with submodules for chain-read, batch, or build (e.g. channel/batch/batch-handlers.ts, sustain/distribution/sustain-distribution.ts). **Regatta** extends **Station** (regatta-extension-service, competition-types; **all-vs-all** live, more types planned). **Barometer** and **Exchange** are **planned** Station extensions (event types 8 and 9) with partial API surface. No game logic in platform; all modules are app-agnostic and keyed by ecosystem_id and app_id.
 
 ### 2.6 Types and Validators
 
@@ -239,7 +244,7 @@ Shared types and validators: `lib/services/platform/validators/platform-validato
 - **Build-and-sign:** Build endpoints return `transactionBytes` (base64) or `channelBuildParams`; app/game decodes, signs with its wallet, submits to chain. Optionally app calls `POST /api/channel/execute` with signed tx. Sustain distribute (POST) returns 410 (disabled); use build-distribute.
 - **Reservoir:** GET reservoir/[address] or reservoir/holdings/[address] → balance and inventory for address (with Corridor). Balance add/set/remove/consume and items consume via routes; merge returns build params then channel/execute.
 - **Sustain Rain:** POST evaluate (definitionKey, address, stats from Hydroscope) → list of eligible milestones; POST claim → build payout tx for app to sign; GET claimed → claimed milestone IDs.
-- **Regatta:** create → build Station event + Regatta config (game signs). enter → build consume ticket + station::enter (client signs). submit-score → build Anchor claim + station::submit_claim_and_record_tournament_score (one tx; client signs).
+- **Regatta:** create → build Station event + Regatta config (game signs). enter → build consume ticket + station::enter (client signs). submit-score → build Anchor claim + station::submit_claim_and_record_tournament_score (one tx; client signs). **All-vs-all** is the live competition shape; more types planned.
 - **Glacier:** add → build add_to_vault; prepare-distribution (Sustain) → vaultReleaseParams for event; release-distribute → build or execute release_distribute; GET payouts → payout history.
 - **Insignia:** Wallet-scoped records on insignia_registry; `/api/insignia` and insignia-service; opaque payloads with app-defined meaning; same multi-tenant keys (ecosystem_id, app_id) as other modules.
 
@@ -255,9 +260,9 @@ The platform has **no implicit defaults** for API keys, ecosystems, or app confi
 
 2. **Store (Terminal, Provisions, Stockroom)** — **Provisions** = item definitions only (supply list, metadata, recipes, categories). **Stockroom** = purchasable offers (SKUs, pricing, limits, pack composition). **Terminal** = commerce engine: purchase, purchase-product; reads Stockroom; calls Channel for payment; Sustain authorizes issuance; Reservoir stores result. Inventory and consume: reservoir items consume; terminal/transaction/[digest]. Merge: reservoir/merge (recipe-based); then channel/execute. Admin catalog build: provisions/admin/catalog/build (returns unsigned tx; app signs).
 
-3. **Events (Station)** — Time-bounded events with participants and submissions. Create (station/route POST), list (station/route GET, station/past), get (station/[id]), enter (station/[id]/enter build), submit (station/[id]/submit — via Anchor claim for Regatta). Event types: tournament (0), challenge (1), competition (2), season (3), custom (4). entry_data and submission_data are opaque (app-defined). Station consumes Anchor claims for submit (submit_claim_and_record_to_station, submit_station_for_user_corridor_via_claim).
+3. **Events (Station)** — Time-bounded events with participants and submissions. Create (station/route POST), list (station/route GET, station/past), get (station/[id]), enter (station/[id]/enter build), submit (station/[id]/submit — via Anchor claim for Regatta). Event types include tournament (0), challenge (1), competition (2), season (3), custom (4); **types 8 (Barometer) and 9 (Exchange) are reserved** for **planned** poll/survey and auction extensions. entry_data and submission_data are opaque (app-defined). Station consumes Anchor claims for submit (submit_claim_and_record_to_station, submit_station_for_user_corridor_via_claim).
 
-4. **Regatta** — Competition mode (Station extension). create (Regatta create_tournament_event), enter (consume ticket + station::enter; build-only), submit-score (Anchor claim + station::submit_claim_and_record_tournament_score; build-only), default-sustain-config (get/set), gas-payment-address. Ticket consumed from Reservoir; submission payload app-defined. Payout via Sustain (prepare-distribution, release-distribute when vault linked).
+4. **Regatta** — Tournament and competition mode (Station extension). create (Regatta create_tournament_event), enter (consume ticket + station::enter; build-only), submit-score (Anchor claim + station::submit_claim_and_record_tournament_score; build-only), default-sustain-config (get/set), gas-payment-address. Ticket consumed from Reservoir; submission payload app-defined. Payout via Sustain (prepare-distribution, release-distribute when vault linked). **Competition implementation in production today is all-vs-all**; additional competition types are planned on the same abstraction.
 
 5. **Milestones (Sustain: Rain)** — Progress goals (e.g. “play 5 games”) that unlock claimable payout. Definitions in Aquifer (app-defined key→value). Evaluate: POST sustain/evaluate (definitionKey, address; uses Hydroscope stats). Claim: POST sustain/claim → build payout tx; app signs. Claimed: GET sustain/claimed. All distribution runs through Sustain (single path).
 
@@ -304,10 +309,12 @@ The platform has **no implicit defaults** for API keys, ecosystems, or app confi
 - **Terminal, Provisions, Stockroom:** Purchase flow (Terminal reads Stockroom); item definitions (Provisions); purchasable offers (Stockroom).
 - **Reservoir:** Balances and items; add/set/remove/consume; merge (recipe-based); ticket-units, holdings, status.
 
-### 4.3 Events and Regatta
+### 4.3 Events, Regatta, and planned extensions
 
-- **Station:** Events (create, enter, submit); opaque entry_data and submission_data.
-- **Regatta:** Tournament extension (create, enter, submit-score); default-sustain-config; gas-payment-address; payout via Sustain.
+- **Station:** Generic events (create, enter, submit); `station` package / `station.move`; opaque entry_data and submission_data.
+- **Regatta:** Tournament and competition extension on Station (create, enter, submit-score); default-sustain-config; gas-payment-address; payout via Sustain. **All-vs-all** competition is what ships today; more competition types planned.
+- **Barometer** (planned extension): `barometer` package — poll/survey mode, **Station event type 8**; full flows still roadmap relative to Station/Regatta.
+- **Exchange** (planned extension): `exchange` package — auction mode, **Station event type 9**; same roadmap status as Barometer.
 
 ### 4.4 Distribution and Storage
 
@@ -325,7 +332,7 @@ The platform has **no implicit defaults** for API keys, ecosystems, or app confi
 
 - **Gauge, Sonar, Buoy, Water Quality:** Price discovery (gauge-service, price-converter); chain query proxy (sonar-service, chain-read-helpers); liveness (buoy); readiness (water-quality-service). Gauge requires Corridor; Sonar balance and POST sonar for app backends.
 - **Anchor:** Sessions, claims, verify (anchor-service); Regatta submit-score consumes Anchor claim in one tx with Station.
-- **Exchange, Barometer:** Station extensions (exchange.move, barometer.move); route re-exports for submit; event schemas partial (polls/surveys, auctions/bids).
+- **Barometer & Exchange (planned):** Station extensions (`barometer.move`, `exchange.move`); API scaffolding and submit re-exports; **event types 8 and 9**—poll/survey and auction semantics still being filled in vs production Station/Regatta.
 - **Harbor Master:** Platform ops (harbor-master-service, verifyHarborMasterAccess); health, verify-wallet, wallet-reserves, ecosystems, migrate-ecosystem-data.
 - **Admin:** App-scoped admin under /api/admin (reservoir list-players, tide/run) with Corridor; no app/game keys on platform.
 
@@ -360,7 +367,7 @@ The platform has **no implicit defaults** for API keys, ecosystems, or app confi
 
 ## 6. Known Limitations and Future Work
 
-**Current scope:** Platform is **SaaS** for multiple apps; no end-user UI (admin page may exist). **No separate database** for event/participant data (all on-chain). **Distribute (execute)** is disabled (410); build-distribute is the only path. **Anchor and Barometer/Exchange** event schemas are partial (structured poll/survey, bid/offer support to be completed). **Water Quality** signals (turbidity, temperature, pressure) can be extended with real metrics (RPC latency, rate limits).
+**Current scope:** Platform is **SaaS** for multiple apps; no end-user UI (admin page may exist). **No separate database** for event/participant data (all on-chain). **Distribute (execute)** is disabled (410); build-distribute is the only path. **Station** and **Regatta** (with **all-vs-all** competition live) are the mature event stack; **Barometer** (type 8) and **Exchange** (type 9) are **planned extensions** with partial schemas and APIs. **Water Quality** signals (turbidity, temperature, pressure) can be extended with real metrics (RPC latency, rate limits).
 
 **Not started / future:** **Logbook** (audit trail, execution trace); **Lighthouse** (advisory alerts, non-blocking warnings); **Dock** (not started). **Sustain Dew/Mist**, **Marina**, **Workshop**, **Charter**, **Arbiter**, **Levee**, **Beacon** are future or parked. **Dispatch** (outbound job queue, retries, rate limits) not started. See Aqueduct Platform/docs/PLATFORM_BUILD_OUT_REMAINING.md.
 
@@ -373,7 +380,7 @@ The platform has **no implicit defaults** for API keys, ecosystems, or app confi
 When promoting yourself or discussing this project, you can accurately say that you (with your team or AI assistance) have:
 
 - Designed and built **Aqueduct Platform**: **shared infrastructure on Sui** as **SaaS** for multiple apps/ecosystems; **apps define, platform executes**; **build-and-sign** pattern throughout; no app/game keys on platform.
-- Delivered **modular API surface**: Game Pass (Reservoir), Store (Terminal, Provisions, Stockroom), Events (Station), Regatta (tournaments), Milestones (Sustain: Rain), Sustain (distribution), Reservoir (balances/items/merge), Glacier (vaults), Shipyard (NFTs), Hydroscope (stats), Gauge (prices), Aquifer (definitions), Insignia (wallet-scoped player records), Channel (tx build/estimate/batch/execute), Anchor, Sonar, Config, Admin, Health.
+- Delivered **modular API surface**: Game Pass (Reservoir), Store (Terminal, Provisions, Stockroom), Events (Station), Regatta (tournaments, **all-vs-all** today; more competition types planned), Milestones (Sustain: Rain), Sustain (distribution), Reservoir (balances/items/merge), Glacier (vaults), Shipyard (NFTs), Hydroscope (stats), Gauge (prices), Aquifer (definitions), Insignia (wallet-scoped player records), Channel (tx build/estimate/batch/execute), Anchor, Sonar, Config, Admin, Health—with **Barometer** and **Exchange** as **planned** Station extensions (event types 8/9).
 - Implemented **Corridor** (app-scoped auth via caps, identity from cap only) and **Harbor Master** (platform ops); **no-defaults** policy for multi-tenancy; **ecosystem-only** config (no app_id-only Chart/Helm).
 - Wrote and deployed **generic Sui Move** contracts: core (chart_registry, chart, harbor_master), station, regatta, reservoir, provisions, terminal, glacier, sustain, helm, hydroscope, shipyard, aquifer, insignia, anchor, exchange, barometer, estuary, stockroom — all **opaque payloads**, app-defined keys and semantics.
 - Built **Tide** (scheduler for event lifecycle and distribution), **Anchor** (sessions and claims for Regatta submit-score), and **migration** services for cutover from legacy to platform.

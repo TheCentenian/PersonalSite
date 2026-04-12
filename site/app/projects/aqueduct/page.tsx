@@ -70,8 +70,10 @@ export default function AqueductPage() {
                   <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Helm</td><td className="px-4 py-2.5">App behavior config, feature flags</td></tr>
                   <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Corridor</td><td className="px-4 py-2.5">App-scoped auth</td></tr>
                   <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Estuary</td><td className="px-4 py-2.5">Identity, wallet connect, entitlements</td></tr>
-                  <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Station</td><td className="px-4 py-2.5">Event services (create, enter, submit)</td></tr>
-                  <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Regatta</td><td className="px-4 py-2.5">Competitions (enter, submit-score, payout)</td></tr>
+                  <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Station</td><td className="px-4 py-2.5">Generic on-chain events (create, enter, submit)</td></tr>
+                  <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Regatta</td><td className="px-4 py-2.5">Tournament extension on Station; all-vs-all live today, more competition types planned</td></tr>
+                  <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Barometer</td><td className="px-4 py-2.5">Planned extension: polls/surveys (Station event type 8)</td></tr>
+                  <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Exchange</td><td className="px-4 py-2.5">Planned extension: auctions (Station event type 9)</td></tr>
                   <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Provisions</td><td className="px-4 py-2.5">Catalog definitions</td></tr>
                   <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Stockroom</td><td className="px-4 py-2.5">Commerce offers, purchasable inventory</td></tr>
                   <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Terminal</td><td className="px-4 py-2.5">Commerce (purchase from catalog)</td></tr>

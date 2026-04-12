@@ -91,7 +91,7 @@ export default function ArchitecturePage() {
               <DesignBlock>
                 <ul className={listClass}>
                   <li><strong className="text-slate-900 dark:text-slate-100">Model:</strong> Apps define catalogs, participation flows, distribution rules, and NFT collections; the platform executes.</li>
-                  <li><strong className="text-slate-900 dark:text-slate-100">Event services:</strong> Apps create events (create, enter, submit). Time-bounded; participants and submissions on-chain. Competitions extend with enter, submit-score, payout.</li>
+                  <li><strong className="text-slate-900 dark:text-slate-100">Event services:</strong> Station handles generic events (create, enter, submit). Regatta adds tournaments on top; all-vs-all competition is what runs in production today, with more shapes planned. Barometer (polls/surveys, Station type 8) and Exchange (auctions, type 9) are planned extensions on the same model.</li>
                   <li><strong className="text-slate-900 dark:text-slate-100">Commerce and catalogs:</strong> Catalog definitions and commerce offers; platform executes purchase from catalog.</li>
                   <li><strong className="text-slate-900 dark:text-slate-100">Balances, distribution, vaults:</strong> Balances and units (merge, consume). Distribution for milestones, payouts; vaults lock assets and release per app-defined rules.</li>
                   <li><strong className="text-slate-900 dark:text-slate-100">NFT operations:</strong> Apps define collections; platform executes mint, upgrade, burn, merge. Transfer policies app-defined.</li>
