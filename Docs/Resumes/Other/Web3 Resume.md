@@ -50,7 +50,7 @@ Technologies used include React, Next.js, TypeScript, and blockchain query servi
 
 Designed a modular infrastructure platform intended to support decentralized applications, games, and digital utilities built on blockchain networks.
 
-The system explores a service oriented architecture that separates application logic from blockchain infrastructure by providing reusable modules for identity, transaction orchestration, digital asset management, rewards distribution, per-player progression (Insignia: opaque key–value bytes per app and wallet), and analytics.
+The system explores a service oriented architecture that separates application logic from blockchain infrastructure by providing reusable modules for identity, transaction orchestration, digital asset management, rewards distribution, Insignia for wallet-scoped player data, and analytics.
 
 The project demonstrates how decentralized applications can interact with blockchain systems through structured infrastructure services rather than implementing blockchain logic independently.
 

@@ -21,7 +21,7 @@ export default function AqueductPage() {
         className="mt-10 text-slate-600 dark:text-slate-400 text-sm leading-relaxed opacity-0 animate-fade-in-up"
         style={{ animationDelay: "120ms" }}
       >
-        Aqueduct is shared infrastructure on Sui designed as SaaS. Multiple tenants (ecosystems and apps) consume the same deployment. Apps define catalogs, participation flows, distribution rules, and NFT collections. The platform provides event services, commerce, vaults, transaction operations, distribution, NFT operations, identity and wallet connect, entitlements, balances, per-player progression (Insignia: opaque key→bytes per wallet and app), and aggregation.
+        Aqueduct is shared infrastructure on Sui designed as SaaS. Multiple tenants (ecosystems and apps) consume the same deployment. Apps define catalogs, participation flows, distribution rules, and NFT collections. The platform provides event services, commerce, vaults, transaction operations, distribution, NFT operations, identity and wallet connect, entitlements, balances, Insignia for wallet-scoped player records, and aggregation.
       </p>
 
       <div className="mt-10 space-y-8">
@@ -82,7 +82,7 @@ export default function AqueductPage() {
                   <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Shipyard</td><td className="px-4 py-2.5">Apps define NFT collections; platform executes NFT operations</td></tr>
                   <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Hydroscope</td><td className="px-4 py-2.5">Aggregation, rankings</td></tr>
                   <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Aquifer</td><td className="px-4 py-2.5">Definition storage (key-value)</td></tr>
-                  <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Insignia</td><td className="px-4 py-2.5">Per-player progression store (<code className="text-xs">insignia</code> package, <code className="text-xs">insignia_registry.move</code>): opaque key→value bytes per ecosystem, app, and wallet; apps interpret (badges, ranks, tiers, etc.)</td></tr>
+                  <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Insignia</td><td className="px-4 py-2.5">Wallet-scoped player records; app-defined keys and payloads</td></tr>
                   <tr><td className="px-4 py-2.5 font-medium text-slate-900 dark:text-slate-100">Sonar</td><td className="px-4 py-2.5">Read-only chain query proxy</td></tr>
                 </tbody>
               </table>

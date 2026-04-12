@@ -42,7 +42,7 @@ Key architectural components include:
 - Commerce and digital asset management
 - Rewards and incentive distribution engines
 - Balance and state storage systems
-- Per-player progression storage (opaque app-defined keys and values per wallet)
+- Wallet-scoped stores for player data the application defines and interprets
 - Application configuration and registry services
 - Analytics and blockchain query services
 

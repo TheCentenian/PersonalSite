@@ -128,7 +128,7 @@ Provides a registry for structured definitions used by applications such as mile
 
 **Insignia**
 
-**Insignia** is the `insignia` Move package (`insignia_registry.move`): a per-player progression store that maps opaque keys to value bytes for each `(ecosystem_id, app_id, wallet)`. The platform stores the bytes; apps assign meaning to keys and values (badges, ranks, tiers, and similar progression data).
+Holds compact, app-chosen records for each player within an ecosystem and application. The platform persists keys and byte payloads scoped to wallet and app context; what those represent is entirely up to the application, whether that is ranks, tiers, badge metadata, or other progression signals.
 
 ---
 
@@ -153,7 +153,7 @@ An example application interacting with Aqueduct might follow a sequence such as
 3. The application constructs a blockchain transaction through Channel
 4. The transaction is returned to the user for signing through their wallet
 5. After execution, digital assets or balances are issued through Sustain and stored within Reservoir
-6. Application analytics and player state are updated through Hydroscope and Insignia
+6. Application analytics are updated through Hydroscope; Insignia covers optional wallet-scoped records the app defines
 
 This architecture allows applications to integrate blockchain functionality while keeping the application layer independent from direct blockchain execution logic.
 
