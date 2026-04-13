@@ -1,4 +1,11 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Sui ecosystem builder, product architect, and systems thinker. End-to-end builder focused on blockchain usability and transaction clarity.",
+};
 
 export default function AboutPage() {
   return (

@@ -1,4 +1,11 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "UI/UX",
+  description:
+    "UI systems and UX intent across projects: components, flows, feedback, and clarity-first interaction design.",
+};
 
 function UiBlock({ children }: { children: React.ReactNode }) {
   return (
@@ -84,7 +91,7 @@ export default function UiUxPage() {
     <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24 bg-sky-50 dark:bg-teal-950/90 h-full min-h-0 overflow-y-auto">
       <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: "0ms" }}>
         <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
-          UI and UX
+          UI/UX
         </h1>
         <p className="mt-2 text-slate-600 dark:text-slate-400">
           Design and user experience for each project.

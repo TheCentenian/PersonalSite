@@ -1,5 +1,11 @@
 import Link from "next/link";
 import { FlowBlock } from "@/components/ContentBlocks";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Architecture",
+  description: "System design and flow across projects: structure, modules, and end-to-end build patterns.",
+};
 
 function DesignBlock({ children }: { children: React.ReactNode }) {
   return (

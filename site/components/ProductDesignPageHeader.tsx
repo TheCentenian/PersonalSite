@@ -21,7 +21,7 @@ export function ProductDesignPageHeader({
         style={{ animationDelay: "0ms" }}
       >
         <span className="inline-block transition-transform duration-200 group-hover:-translate-x-0.5">←</span>{" "}
-        Product design
+        Product Design
       </Link>
       <header
         className="opacity-0 animate-fade-in-up rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white/60 dark:bg-slate-800/40 backdrop-blur-sm p-5 sm:p-6"

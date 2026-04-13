@@ -19,8 +19,8 @@ export default function EvarraTrackerPage() {
         status="MVP released"
         links={[
           { href: "/architecture", label: "Architecture Design" },
-          { href: "/ui-ux", label: "UI and UX Design" },
-          { href: "/product-design/evarra-tracker", label: "Product design" },
+          { href: "/ui-ux", label: "UI/UX Design" },
+          { href: "/product-design/evarra-tracker", label: "Product Design" },
         ]}
         liveUrl="https://evarra-tracker.vercel.app/"
         liveLabel="Try the app"
@@ -66,7 +66,7 @@ export default function EvarraTrackerPage() {
         >
           <div className="p-6">
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
-              Product design
+              Product Design
             </h2>
             <div className="mt-5">
               <ProductDesignBlock>
@@ -104,7 +104,7 @@ export default function EvarraTrackerPage() {
         >
           <div className="p-6">
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
-              UI and UX
+              UI/UX
             </h2>
             <div className="mt-5 space-y-4">
               <UiBlock>

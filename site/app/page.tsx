@@ -1,10 +1,17 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 
 const projects = [
   { name: "Evarra Tracker", slug: "evarra-tracker", line: ["Complex blockchain data, human-readable.", "Add wallets, define goals, run analytics."] },
   { name: "Aqueduct SaaS Platform", slug: "aqueduct", line: ["Shared backend infrastructure on Sui.", "Builders focus on their app.", "The platform handles the rest."] },
   { name: "SuiTwo Market Shooter", slug: "suitwo", line: ["Battle Market Forces.", "Create your own tournaments.", "Join the leaderboards."] },
 ];
+
+export const metadata: Metadata = {
+  title: "Home",
+  description:
+    "Web3 product engineer and systems thinker. End-to-end builder focused on transaction clarity, digital asset ownership, and event-driven apps on Sui.",
+};
 
 export default function HomePage() {
   return (

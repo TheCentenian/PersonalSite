@@ -16,7 +16,7 @@ export default function ParadigmWalletPage() {
         title="Paradigm Wallet"
         subtitle="Lightweight Sui wallet web UI"
         status="No longer in development"
-        links={[{ href: "/ui-ux", label: "UI and UX Design" }]}
+        links={[{ href: "/ui-ux", label: "UI/UX Design" }]}
       />
 
       <p
@@ -56,7 +56,7 @@ export default function ParadigmWalletPage() {
         >
           <div className="p-6">
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
-              UI and UX
+              UI/UX
             </h2>
             <div className="mt-5 space-y-4">
               <UiBlock>

@@ -82,7 +82,7 @@ export function UxBlock({ children }: { children: React.ReactNode }) {
 export function ProductDesignBlock({ children }: { children: React.ReactNode }) {
   return (
     <Block
-      label="Product design"
+      label="Product Design"
       borderClass="border-sky-400/70 dark:border-sky-500/60"
       bgClass="bg-sky-50/50 dark:bg-sky-950/25"
       pillClass="bg-sky-200/80 dark:bg-sky-900/50 text-sky-900 dark:text-sky-200"

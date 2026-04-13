@@ -19,8 +19,8 @@ export default function SuiTwoShooterPage() {
         status="Complete"
         links={[
           { href: "/architecture", label: "Architecture Design" },
-          { href: "/ui-ux", label: "UI and UX Design" },
-          { href: "/product-design/sui-two-shooter", label: "Product design" },
+          { href: "/ui-ux", label: "UI/UX Design" },
+          { href: "/product-design/sui-two-shooter", label: "Product Design" },
         ]}
         liveUrl="https://sui-two-shooter.vercel.app/"
         liveLabel="Play game"
@@ -72,7 +72,7 @@ export default function SuiTwoShooterPage() {
         >
           <div className="p-6">
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
-              Product design
+              Product Design
             </h2>
             <div className="mt-5">
               <ProductDesignBlock>
@@ -111,7 +111,7 @@ export default function SuiTwoShooterPage() {
         >
           <div className="p-6">
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
-              UI and UX
+              UI/UX
             </h2>
             <div className="mt-5 space-y-4">
               <UiBlock>

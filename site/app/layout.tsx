@@ -11,9 +11,12 @@ const font = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "The Centenian | Web3 Infrastructure Builder",
+  title: {
+    default: "The Centenian",
+    template: "%s | The Centenian",
+  },
   description:
-    "Sui ecosystem builder. Product architect. Systems thinker. Building experimental apps around blockchain UX, asset ownership, and event-driven systems.",
+    "Web3 product engineer and systems thinker. I build end-to-end products that make blockchain usable—transaction clarity, digital asset ownership, and event-driven apps.",
 };
 
 export default function RootLayout({

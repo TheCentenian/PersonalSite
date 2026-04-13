@@ -10,8 +10,8 @@ const primaryLinks = [
 
 const designLinks = [
   { href: "/architecture", label: "Architecture" },
-  { href: "/ui-ux", label: "UI and UX" },
-  { href: "/product-design", label: "Product design" },
+  { href: "/ui-ux", label: "UI/UX" },
+  { href: "/product-design", label: "Product Design" },
 ];
 
 const endLinks = [

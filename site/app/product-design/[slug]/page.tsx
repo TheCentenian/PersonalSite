@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { ProductDesignPageHeader } from "@/components/ProductDesignPageHeader";
 import { listClass, sectionCardClass } from "@/components/ContentBlocks";
 import {
@@ -11,6 +12,16 @@ type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
   return productDesignSlugs.map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const c = getProductDesignCase(slug);
+  if (!c) return { title: "Product Design" };
+  return {
+    title: `${c.title} (Product Design)`,
+    description: c.subtitle ?? "Product design case study: problem, flows, and design decisions.",
+  };
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -120,7 +131,7 @@ export default async function ProductDesignCasePage({ params }: Props) {
           design
         </Link>
         <Link href="/ui-ux" className="link-accent link-underline inline-flex items-center text-sm font-medium gap-1 group">
-          UI and UX systems
+          UI/UX systems
           <span className="inline-block transition-transform duration-200 group-hover:translate-x-0.5">→</span>
         </Link>
       </div>

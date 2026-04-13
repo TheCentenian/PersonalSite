@@ -18,8 +18,8 @@ export default function InsomniaPage() {
         subtitle="Fast-paced 5×5 clicker/reflex endurance game on Sui"
         status="Built, unreleased"
         links={[
-          { href: "/ui-ux", label: "UI and UX Design" },
-          { href: "/product-design/insomnia", label: "Product design" },
+          { href: "/ui-ux", label: "UI/UX Design" },
+          { href: "/product-design/insomnia", label: "Product Design" },
         ]}
         liveUrl="https://insomnia-blue.vercel.app/"
         liveLabel="Play game"
@@ -73,7 +73,7 @@ export default function InsomniaPage() {
         >
           <div className="p-6">
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
-              Product design
+              Product Design
             </h2>
             <div className="mt-5">
               <ProductDesignBlock>
@@ -112,7 +112,7 @@ export default function InsomniaPage() {
         >
           <div className="p-6">
             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
-              UI and UX
+              UI/UX
             </h2>
             <div className="mt-5 space-y-4">
               <UiBlock>

@@ -1,11 +1,18 @@
 import Link from "next/link";
 import { productDesignCases } from "@/data/productDesignCases";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Product Design",
+  description:
+    "Design-thinking write-ups: product problems, flows, tradeoffs, and how complexity is managed.",
+};
 
 export default function ProductDesignIndexPage() {
   return (
     <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24 bg-sky-50 dark:bg-teal-950/90 h-full min-h-0 overflow-y-auto">
       <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: "0ms" }}>
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">Product design</h1>
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">Product Design</h1>
         <p className="mt-2 text-slate-600 dark:text-slate-400">
           Design-thinking write-ups: problems, flows, interaction and visual choices, and how complexity is managed—
           separate from UI systems detail and engineering architecture.
