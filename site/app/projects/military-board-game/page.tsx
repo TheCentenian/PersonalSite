@@ -13,10 +13,13 @@ export default function MilitaryBoardGamePage() {
   return (
     <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24 bg-sky-50 dark:bg-teal-950/90 h-full min-h-0 overflow-y-auto">
       <ProjectPageHeader
-        title="Military Card-Board Game"
+        title="Military Tactics Game"
         subtitle="Turn-based tactical card/board game for two players"
         status="In build"
         links={[{ href: "/ui-ux", label: "UI/UX Design" }]}
+        liveUrl="https://military-tactics-game.vercel.app/"
+        liveLabel="Play game"
+        liveAsButton
       />
 
       <p

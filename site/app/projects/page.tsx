@@ -52,12 +52,13 @@ const projects = [
   },
   {
     slug: "military-board-game",
-    name: "Military Card-Board Game",
+    name: "Military Tactics Game",
     summary:
       "Tactical depth, clear rules. A two-player card and board game that puts strategy and readability first. Deploy units, manage resources, and capture territory in a single session. The UI makes valid moves and combat outcomes obvious so you can think ahead.",
     status: "In build",
     update: "Still in the build phase; skirmish mode and core mechanics in progress.",
     href: "/projects/military-board-game",
+    liveUrl: "https://military-tactics-game.vercel.app/",
   },
   {
     slug: "paper-games",

@@ -168,7 +168,7 @@ export default function UiUxPage() {
         />
 
         <ProjectCard
-          title="Military Card-Board Game"
+          title="Military Tactics Game"
           href="/projects/military-board-game"
           delay="320ms"
           uiContent={

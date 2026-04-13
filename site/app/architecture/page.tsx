@@ -199,7 +199,7 @@ export default function ArchitecturePage() {
           <div className="p-6">
             <div className="flex flex-wrap items-baseline justify-between gap-3">
               <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 tracking-tight">
-                Military Card-Board Game
+                Military Tactics Game
               </h2>
               <Link
                 href="/projects/military-board-game"
