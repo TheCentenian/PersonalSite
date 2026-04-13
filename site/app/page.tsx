@@ -22,6 +22,7 @@ export default function HomePage() {
         style={{ animationDelay: "80ms" }}
       >
         I build end-to-end products and modular systems that make blockchain usable—transaction clarity, digital asset ownership, and event-driven apps.
+        I help teams ship faster by turning complex on-chain behavior into clear product experiences and reusable infrastructure.
         Over the past year and a half I’ve shipped one MVP and have three projects in testing—built solo across product direction, UI/UX, full-stack apps, wallet and signing flows, and smart-contract-level systems.
       </p>
 
