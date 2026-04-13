@@ -14,17 +14,15 @@ export default function HomePage() {
           The Centenian
         </h1>
         <p className="mt-2 text-xl text-emerald-600 dark:text-emerald-400 font-medium">
-          Web3 Infrastructure Builder
+          Web3 Product Engineer
         </p>
       </div>
       <p
         className="mt-6 text-slate-600 dark:text-slate-400 leading-relaxed opacity-0 animate-fade-in-up"
         style={{ animationDelay: "80ms" }}
       >
-        An explorer of modular decentralized systems on Sui. My focus is systems
-        design, blockchain usability, and modular architecture. I build
-        experimental apps around blockchain UX, asset ownership, and
-        event-driven systems.
+        I build end-to-end products and modular systems that make blockchain usable—transaction clarity, digital asset ownership, and event-driven apps.
+        Over the past year and a half I’ve shipped one MVP and have three projects in testing—built solo across product direction, UI/UX, full-stack apps, wallet and signing flows, and smart-contract-level systems.
       </p>
 
       <section className="mt-12 pt-10 border-t border-slate-200 dark:border-slate-700 opacity-0 animate-fade-in-up" style={{ animationDelay: "140ms" }}>
