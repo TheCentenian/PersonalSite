@@ -7,6 +7,12 @@ export const metadata: Metadata = {
     "A selection of projects carried through design and engineering—focused on blockchain usability, transaction clarity, and modular systems on Sui.",
 };
 
+type LiveLink = {
+  href: string;
+  label: string;
+  variant?: "primary" | "secondary";
+};
+
 const projects = [
   {
     slug: "evarra-tracker",
@@ -35,8 +41,20 @@ const projects = [
     status: "Complete",
     update: "Game is complete; currently wiring to Aqueduct platform for testing and integration.",
     href: "/projects/suitwo",
-    liveUrl: "https://sui-two-shooter.vercel.app/",
-    liveNote: "Playable alpha—core gameplay only; leaderboard, store, and tournaments still wiring to Aqueduct.",
+    liveLinks: [
+      {
+        href: "https://sui-two-shooter-frontend-sui-integr.vercel.app/",
+        label: "Play (testnet upgrade)",
+        variant: "primary",
+      },
+      {
+        href: "https://sui-two-shooter.vercel.app/",
+        label: "Play (alpha)",
+        variant: "secondary",
+      },
+    ] satisfies LiveLink[],
+    liveNote:
+      "Testnet upgrade = newest build. Alpha = legacy build (core gameplay only).",
   },
   {
     slug: "insomnia",
@@ -93,14 +111,30 @@ export default function ProjectsPage() {
         </p>
       </div>
       <ul className="mt-12 space-y-6">
-        {projects.map(({ name, summary, status, update, href, liveUrl, liveNote }, i) => (
+        {projects.map(({ name, summary, status, update, href, liveUrl, liveLinks, liveNote }, i) => {
+          const effectiveLiveLinks: LiveLink[] =
+            liveLinks && liveLinks.length > 0
+              ? liveLinks
+              : liveUrl
+                ? [{ href: liveUrl, label: "Open app", variant: "primary" }]
+                : [];
+
+          const getLiveLinkClassName = (variant: LiveLink["variant"]) => {
+            if (variant === "secondary") {
+              return "inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white/70 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:border-slate-600 dark:bg-slate-900/30 dark:text-slate-200 dark:hover:bg-slate-900/50 dark:focus:ring-offset-slate-900 transition-colors";
+            }
+
+            return "inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 transition-colors";
+          };
+
+          return (
           <li
             key={href}
             className="relative opacity-0 animate-fade-in-up"
             style={{ animationDelay: `${120 + i * 80}ms` }}
           >
             <div className="group p-5 -mx-2 rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white/60 dark:bg-slate-800/40 backdrop-blur-sm hover:border-emerald-300 dark:hover:border-emerald-600 hover:bg-slate-50 dark:hover:bg-slate-800/70 hover:shadow-lg hover:shadow-emerald-500/5 dark:hover:shadow-emerald-400/5 hover:-translate-y-0.5 transition-all duration-300 ease-out">
-              {liveUrl && liveNote ? (
+              {effectiveLiveLinks.length > 0 && liveNote ? (
                 <div className="flex flex-col gap-4">
                   {/* Top container: title + summary */}
                   <Link href={href} className="block">
@@ -135,14 +169,19 @@ export default function ProjectsPage() {
                     </div>
 
                     <div className="flex flex-col justify-end items-end gap-1 shrink-0">
-                      <a
-                        href={liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 transition-colors"
-                      >
-                        Open app ↗
-                      </a>
+                      <div className="flex flex-col items-end gap-2">
+                        {effectiveLiveLinks.map(({ href: liveHref, label, variant }) => (
+                          <a
+                            key={liveHref}
+                            href={liveHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={getLiveLinkClassName(variant)}
+                          >
+                            {label} ↗
+                          </a>
+                        ))}
+                      </div>
                       <span className="text-xs text-slate-500 dark:text-slate-400 max-w-[220px] text-right leading-snug">
                         {liveNote}
                       </span>
@@ -177,20 +216,26 @@ export default function ProjectsPage() {
               )}
             </div>
 
-            {liveUrl && !liveNote && (
+            {effectiveLiveLinks.length > 0 && !liveNote && (
               <div className="absolute bottom-4 right-4 z-10">
-                <a
-                  href={liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 transition-colors"
-                >
-                  Open app ↗
-                </a>
+                <div className="flex flex-col items-end gap-2">
+                  {effectiveLiveLinks.map(({ href: liveHref, label, variant }) => (
+                    <a
+                      key={liveHref}
+                      href={liveHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={getLiveLinkClassName(variant)}
+                    >
+                      {label} ↗
+                    </a>
+                  ))}
+                </div>
               </div>
             )}
           </li>
-        ))}
+          );
+        })}
       </ul>
     </div>
   );

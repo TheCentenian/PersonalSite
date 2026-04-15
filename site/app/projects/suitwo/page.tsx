@@ -40,7 +40,8 @@ export default function SuiTwoShooterPage() {
         className="mt-6 text-slate-500 dark:text-slate-400 text-sm leading-relaxed opacity-0 animate-fade-in-up border-l-2 border-slate-300 dark:border-slate-600 pl-3"
         style={{ animationDelay: "100ms" }}
       >
-        The playable link is the current alpha: core shooter gameplay only. Leaderboard, store, tournaments, and full Aqueduct integration are still being wired.
+        Two builds available: <strong className="text-slate-700 dark:text-slate-200">Testnet upgrade (newest)</strong> and{" "}
+        <strong className="text-slate-700 dark:text-slate-200">Alpha (legacy)</strong>. Use the testnet upgrade unless you are comparing behavior.
       </p>
 
       <p
