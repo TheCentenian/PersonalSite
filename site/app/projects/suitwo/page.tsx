@@ -22,9 +22,18 @@ export default function SuiTwoShooterPage() {
           { href: "/ui-ux", label: "UI/UX Design" },
           { href: "/product-design/sui-two-shooter", label: "Product Design" },
         ]}
-        liveUrl="https://sui-two-shooter.vercel.app/"
-        liveLabel="Play game"
-        liveAsButton
+        liveLinks={[
+          {
+            href: "https://sui-two-shooter-frontend-sui-integr.vercel.app/",
+            label: "Play (testnet upgrade)",
+            variant: "primary",
+          },
+          {
+            href: "https://sui-two-shooter.vercel.app/",
+            label: "Play (alpha)",
+            variant: "secondary",
+          },
+        ]}
       />
 
       <p

@@ -5,11 +5,18 @@ type HeaderLink = {
   label: string;
 };
 
+type LiveLink = {
+  href: string;
+  label: string;
+  variant?: "primary" | "secondary";
+};
+
 type ProjectPageHeaderProps = {
   title: string;
   subtitle: string;
   status: string;
   links?: HeaderLink[];
+  liveLinks?: LiveLink[];
   liveUrl?: string;
   liveLabel?: string;
   liveAsButton?: boolean;
@@ -20,10 +27,26 @@ export function ProjectPageHeader({
   subtitle,
   status,
   links = [],
+  liveLinks = [],
   liveUrl,
   liveLabel = "Open app",
   liveAsButton = false,
 }: ProjectPageHeaderProps) {
+  const effectiveLiveLinks: LiveLink[] =
+    liveLinks.length > 0
+      ? liveLinks
+      : liveUrl
+        ? [{ href: liveUrl, label: liveLabel, variant: liveAsButton ? "primary" : "secondary" }]
+        : [];
+
+  const getLiveLinkClassName = (variant: LiveLink["variant"]) => {
+    if (variant === "secondary") {
+      return "inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white/70 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:border-slate-600 dark:bg-slate-900/30 dark:text-slate-200 dark:hover:bg-slate-900/50 dark:focus:ring-offset-slate-900 transition-colors";
+    }
+
+    return "inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 transition-colors";
+  };
+
   return (
     <>
       <Link
@@ -44,7 +67,7 @@ export function ProjectPageHeader({
           </span>
         </div>
         <p className="mt-2 text-emerald-600 dark:text-emerald-400 font-medium">{subtitle}</p>
-        {(links.length > 0 || liveUrl) && (
+        {(links.length > 0 || effectiveLiveLinks.length > 0) && (
           <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
             {links.map(({ href, label }) => (
               <Link
@@ -56,20 +79,21 @@ export function ProjectPageHeader({
                 <span className="inline-block transition-transform duration-200 group-hover:translate-x-0.5">→</span>
               </Link>
             ))}
-            {liveUrl && (
-              <a
-                href={liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={
-                  liveAsButton
-                    ? "ml-auto inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 transition-colors"
-                    : "ml-auto inline-flex items-center gap-1 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
-                }
-              >
-                {liveLabel}
-                <span aria-hidden>↗</span>
-              </a>
+            {effectiveLiveLinks.length > 0 && (
+              <div className="ml-auto flex flex-wrap items-center gap-2">
+                {effectiveLiveLinks.map(({ href, label, variant }) => (
+                  <a
+                    key={href}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={getLiveLinkClassName(variant)}
+                  >
+                    {label}
+                    <span aria-hidden>↗</span>
+                  </a>
+                ))}
+              </div>
             )}
           </div>
         )}
